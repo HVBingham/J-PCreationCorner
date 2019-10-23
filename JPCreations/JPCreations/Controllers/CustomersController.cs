@@ -18,14 +18,14 @@ namespace JPCreations.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            var listOfCustomers = context.customers.ToList();
+            var listOfCustomers = context.Customers.ToList();
             return View(listOfCustomers);
         }
 
         // GET: Customers/Details/5
         public ActionResult Details(int id)
         {
-            Customer detailsOfCustomer = context.customers.Find(id);
+            Customer detailsOfCustomer = context.Customers.Find(id);
             return View(detailsOfCustomer);
         }
 
@@ -43,7 +43,7 @@ namespace JPCreations.Controllers
             try
             {
                 customer.ApplicationId = User.Identity.GetUserId();
-                context.customers.Add(customer);
+                context.Customers.Add(customer);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -56,7 +56,7 @@ namespace JPCreations.Controllers
         // GET: Customers/Edit/5
         public ActionResult Edit(int id)
         {
-            Customer editCustomer = context.customers.Find(id);
+            Customer editCustomer = context.Customers.Find(id);
 
             return View(editCustomer);
         }
@@ -68,7 +68,7 @@ namespace JPCreations.Controllers
             try
             {
 
-                var editCustomer = context.customers.Find(id);
+                var editCustomer = context.Customers.Find(id);
                 editCustomer.FirstName = customer.FirstName;
                 editCustomer.LastName = customer.LastName;
                 editCustomer.StreetAddress = customer.StreetAddress;
@@ -88,7 +88,7 @@ namespace JPCreations.Controllers
         // GET: Customers/Delete/5
         public ActionResult Delete(int id)
         {
-            Customer removeCustomer = context.customers.Find(id);
+            Customer removeCustomer = context.Customers.Find(id);
             return View(removeCustomer);
         }
 
@@ -98,9 +98,9 @@ namespace JPCreations.Controllers
         {
             try
             {
-                Customer removeCustomer = context.customers.Find(id);
+                Customer removeCustomer = context.Customers.Find(id);
                 removeCustomer = customer;
-                context.customers.Remove(removeCustomer);
+                context.Customers.Remove(removeCustomer);
 
                 return RedirectToAction("Index");
             }
