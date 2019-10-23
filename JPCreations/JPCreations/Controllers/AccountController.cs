@@ -142,7 +142,7 @@ namespace JPCreations.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Moderator") && !u.Name.Contains("Admin"))
+            ViewBag.Name = new SelectList(context.Roles.Where(u => /*!u.Name.Contains("Moderator") &&*/ !u.Name.Contains("Admin"))
                 .ToList(), "Name", "Name");
             return View();
         }
@@ -178,7 +178,7 @@ namespace JPCreations.Controllers
                     }
                    
                 }
-                ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Moderator") && !u.Name.Contains("Admin"))
+                ViewBag.Name = new SelectList(context.Roles.Where(u =>/* !u.Name.Contains("Moderator") &&*/ !u.Name.Contains("Admin"))
                                        .ToList(), "Name","Name");
                 AddErrors(result);
             }

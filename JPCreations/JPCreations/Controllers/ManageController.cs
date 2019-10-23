@@ -244,6 +244,7 @@ namespace JPCreations.Controllers
             return View(model);
         }
 
+     
         //
         // GET: /Manage/SetPassword
         public ActionResult SetPassword()
