@@ -7,13 +7,13 @@ namespace JPCreations.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class madeienumerable : IMigrationMetadata
+    public sealed partial class productsModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(madeienumerable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(productsModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "201910221745254_madeienumerable"; }
+            get { return "201910241744159_productsModel"; }
         }
         
         string IMigrationMetadata.Source

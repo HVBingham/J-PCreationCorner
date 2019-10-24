@@ -175,6 +175,7 @@
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ModeratorsController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -190,10 +191,6 @@
     <Compile Include="Migrations\201910221700296_Removalofunneeded.Designer.cs">
       <DependentUpon>201910221700296_Removalofunneeded.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910221745254_madeienumerable.cs" />
-    <Compile Include="Migrations\201910221745254_madeienumerable.Designer.cs">
-      <DependentUpon>201910221745254_madeienumerable.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201910231418379_moderatorModel.cs" />
     <Compile Include="Migrations\201910231418379_moderatorModel.Designer.cs">
       <DependentUpon>201910231418379_moderatorModel.cs</DependentUpon>
@@ -201,6 +198,14 @@
     <Compile Include="Migrations\201910231429240_updateofModerator.cs" />
     <Compile Include="Migrations\201910231429240_updateofModerator.Designer.cs">
       <DependentUpon>201910231429240_updateofModerator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910241744159_productsModel.cs" />
+    <Compile Include="Migrations\201910241744159_productsModel.Designer.cs">
+      <DependentUpon>201910241744159_productsModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910241759104_addtionofimages.cs" />
+    <Compile Include="Migrations\201910241759104_addtionofimages.Designer.cs">
+      <DependentUpon>201910241759104_addtionofimages.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -226,6 +231,7 @@
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Moderator.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -311,6 +317,11 @@
     <Content Include="Views\Moderators\Details.cshtml" />
     <Content Include="Views\Moderators\Create.cshtml" />
     <Content Include="Views\Moderators\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -339,14 +350,17 @@
     <EmbeddedResource Include="Migrations\201910221700296_Removalofunneeded.resx">
       <DependentUpon>201910221700296_Removalofunneeded.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910221745254_madeienumerable.resx">
-      <DependentUpon>201910221745254_madeienumerable.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231418379_moderatorModel.resx">
       <DependentUpon>201910231418379_moderatorModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231429240_updateofModerator.resx">
       <DependentUpon>201910231429240_updateofModerator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910241744159_productsModel.resx">
+      <DependentUpon>201910241744159_productsModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910241759104_addtionofimages.resx">
+      <DependentUpon>201910241759104_addtionofimages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

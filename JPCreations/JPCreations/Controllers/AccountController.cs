@@ -174,7 +174,7 @@ namespace JPCreations.Controllers
                     }
                     if(model.UserRole == "Moderator")
                     {
-                        return RedirectToAction("Create", "Moderator");
+                        return RedirectToAction("Create", "Moderators");
                     }
                    
                 }
