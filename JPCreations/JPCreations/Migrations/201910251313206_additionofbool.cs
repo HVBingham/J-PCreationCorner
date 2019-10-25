@@ -3,16 +3,16 @@ namespace JPCreations.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Removalofunneeded : DbMigration
+    public partial class additionofbool : DbMigration
     {
         public override void Up()
         {
-            DropColumn("dbo.Customers", "EmailAddress");
+            AddColumn("dbo.Products", "IsActive", c => c.Boolean(nullable: false));
         }
         
         public override void Down()
         {
-            AddColumn("dbo.Customers", "EmailAddress", c => c.String());
+            DropColumn("dbo.Products", "IsActive");
         }
     }
 }

@@ -179,59 +179,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910221432142_FristINIT.cs" />
-    <Compile Include="Migrations\201910221432142_FristINIT.Designer.cs">
-      <DependentUpon>201910221432142_FristINIT.cs</DependentUpon>
+    <Compile Include="Migrations\201910242028375_NewInit.cs" />
+    <Compile Include="Migrations\201910242028375_NewInit.Designer.cs">
+      <DependentUpon>201910242028375_NewInit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910221603170_addtionofModel.cs" />
-    <Compile Include="Migrations\201910221603170_addtionofModel.Designer.cs">
-      <DependentUpon>201910221603170_addtionofModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910221700296_Removalofunneeded.cs" />
-    <Compile Include="Migrations\201910221700296_Removalofunneeded.Designer.cs">
-      <DependentUpon>201910221700296_Removalofunneeded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910231418379_moderatorModel.cs" />
-    <Compile Include="Migrations\201910231418379_moderatorModel.Designer.cs">
-      <DependentUpon>201910231418379_moderatorModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910231429240_updateofModerator.cs" />
-    <Compile Include="Migrations\201910231429240_updateofModerator.Designer.cs">
-      <DependentUpon>201910231429240_updateofModerator.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910241744159_productsModel.cs" />
-    <Compile Include="Migrations\201910241744159_productsModel.Designer.cs">
-      <DependentUpon>201910241744159_productsModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910241759104_addtionofimages.cs" />
-    <Compile Include="Migrations\201910241759104_addtionofimages.Designer.cs">
-      <DependentUpon>201910241759104_addtionofimages.cs</DependentUpon>
+    <Compile Include="Migrations\201910251313206_additionofbool.cs" />
+    <Compile Include="Migrations\201910251313206_additionofbool.Designer.cs">
+      <DependentUpon>201910251313206_additionofbool.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\ContextModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ContextModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ContextModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ContextModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ContextModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ContextModel.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Image.cs">
-      <DependentUpon>ContextModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Moderator.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -244,25 +208,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\ContextModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ContextModel.edmx</DependentUpon>
-      <LastGenOutput>ContextModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\ContextModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ContextModel.edmx</DependentUpon>
-      <LastGenOutput>ContextModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\ContextModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ContextModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\ContextModel.edmx.diagram">
-      <DependentUpon>ContextModel.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -319,9 +266,10 @@
     <Content Include="Views\Moderators\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Products\Details.cshtml" />
-    <Content Include="Views\Products\Create.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Deactivated.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -341,30 +289,15 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910221432142_FristINIT.resx">
-      <DependentUpon>201910221432142_FristINIT.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910221603170_addtionofModel.resx">
-      <DependentUpon>201910221603170_addtionofModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910221700296_Removalofunneeded.resx">
-      <DependentUpon>201910221700296_Removalofunneeded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910231418379_moderatorModel.resx">
-      <DependentUpon>201910231418379_moderatorModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910231429240_updateofModerator.resx">
-      <DependentUpon>201910231429240_updateofModerator.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910241744159_productsModel.resx">
-      <DependentUpon>201910241744159_productsModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910241759104_addtionofimages.resx">
-      <DependentUpon>201910241759104_addtionofimages.cs</DependentUpon>
-    </EmbeddedResource>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <EmbeddedResource Include="Migrations\201910242028375_NewInit.resx">
+      <DependentUpon>201910242028375_NewInit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910251313206_additionofbool.resx">
+      <DependentUpon>201910251313206_additionofbool.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

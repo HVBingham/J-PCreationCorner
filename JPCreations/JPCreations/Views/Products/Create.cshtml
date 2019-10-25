@@ -48,6 +48,24 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model=>model.ImageId, htmlAttributes: new { @class="control-label col-md-2"})
+            @*@Html.Label("Image", new { @class = "contorl-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.DropDownListFor(model=>model.ImageId, new SelectList(Model.Images, "Id","Title"), " ", new {@class="form-control"})
+                @*@Html.DropDownList("Image", (SelectList)ViewBag.Product, " ");*@
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(m => m.IsActive)
+                    @Html.LabelFor(m => m.IsActive)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

@@ -16,7 +16,14 @@ namespace JPCreations.Models
         public string Category { get; set; }
         public string Description { get; set; }
         public double Price { get; set; } 
-        public ICollection<Image> Images { get; set; }
+        [Display(Name ="Currently An Active item?")]
+        public bool IsActive { get; set; }
+        [ForeignKey("Image")]
+        [Display(Name ="Product Image")]
+        public int ImageId { get; set; }
+        public Image Image { get; set; }
+        public IEnumerable<Image> Images { get; set; }
+      
         
         
     }

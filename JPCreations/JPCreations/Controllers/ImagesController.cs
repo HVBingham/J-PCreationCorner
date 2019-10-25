@@ -10,11 +10,16 @@ namespace JPCreations.Controllers
 {
     public class ImagesController : Controller
     {
+        ApplicationDbContext context;
+        public ImagesController()
+        {
+            context = new ApplicationDbContext();
+        }
         [HttpGet]
         public ActionResult Add()
         {
-
-            return View();
+            Image image = new Image();
+            return View(image);
         }
         [HttpPost]
         public ActionResult Add(Image image)
@@ -25,12 +30,8 @@ namespace JPCreations.Controllers
             image.ImagePath = "~/Image/" + fileName;
             fileName = Path.Combine(Server.MapPath("~/Image/") + fileName);
             image.ImageFile.SaveAs(fileName);
-            using(ContextModels context = new ContextModels())
-            {
-                context.Images.Add(image);
-                context.SaveChanges();
-            }
-            ModelState.Clear();
+            context.Images.Add(image);
+            context.SaveChanges();
             return View();
         }
     } 

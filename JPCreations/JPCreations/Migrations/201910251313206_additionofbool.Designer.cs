@@ -7,13 +7,13 @@ namespace JPCreations.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class FristINIT : IMigrationMetadata
+    public sealed partial class additionofbool : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FristINIT));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(additionofbool));
         
         string IMigrationMetadata.Id
         {
-            get { return "201910221432142_FristINIT"; }
+            get { return "201910251313206_additionofbool"; }
         }
         
         string IMigrationMetadata.Source

@@ -48,9 +48,8 @@ namespace JPCreations.Models
 
     public class LoginViewModel
     {
-        
+        [Required]
         [Display(Name = "UserName")]
-        [EmailAddress]
         public string UserName { get; set; }
 
         [Required]

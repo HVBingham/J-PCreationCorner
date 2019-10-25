@@ -23,6 +23,7 @@ namespace JPCreations.Models
        public DbSet<Customer> Customers { get; set; }
         public DbSet<Moderator> Moderators { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Image> Images { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

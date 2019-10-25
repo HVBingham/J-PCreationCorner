@@ -1,14 +1,13 @@
 ﻿@model IEnumerable<JPCreations.Models.Product>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Deactivated";
 }
 
-<h2>Index</h2>
+<h2>Deactivated Products:</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")|
-    @Html.ActionLink("Deactivated Products", "Deactivated")
+    @Html.ActionLink("Back to Active", "Index")
 </p>
 <table class="table">
     <tr>
@@ -24,9 +23,11 @@
         <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
+      
         <th>
-            @Html.DisplayNameFor(model=>model.Image.Title)
+            @Html.DisplayNameFor(model => model.Image.Title)
         </th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -43,13 +44,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
+      
         <td>
             @Html.DisplayFor(modelItem=>item.Image.Title)
         </td>
-        
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id })
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
         </td>
     </tr>
 }

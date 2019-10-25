@@ -41,7 +41,13 @@
         <dd>
             @Html.DisplayFor(model => model.Price)
         </dd>
-
+        <dt>
+            @Html.DisplayNameFor(model=>model.Image.ImagePath)
+        </dt>
+        <dd>
+            <img src="@Url.Content(Model.Image.ImagePath)" width="350" height="450" />
+       </dd>
+      
     </dl>
 </div>
 <p>

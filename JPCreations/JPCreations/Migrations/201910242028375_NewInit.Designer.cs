@@ -7,13 +7,13 @@ namespace JPCreations.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class productsModel : IMigrationMetadata
+    public sealed partial class NewInit : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(productsModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(NewInit));
         
         string IMigrationMetadata.Id
         {
-            get { return "201910241744159_productsModel"; }
+            get { return "201910242028375_NewInit"; }
         }
         
         string IMigrationMetadata.Source
