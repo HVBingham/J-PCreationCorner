@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using JPCreations.Models;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity;
+
 
 namespace JPCreations.Controllers
 {
@@ -18,11 +20,15 @@ namespace JPCreations.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            var listOfCustomers = context.Customers.ToList();
-            return View(listOfCustomers);
+            var listofProducts = context.Products.Include(p => p.Image).Where(p => p.IsActive == true && p.Quantity>=1).ToList();
+            return View(listofProducts);
         }
-
-        // GET: Customers/Details/5
+        public ActionResult ProductDetails (int id)
+        {
+            Product product = context.Products.Include(p=>p.Image).Where(p=>p.Id==id).SingleOrDefault();
+            return View(product);
+        }
+        
         public ActionResult Details(int id)
         {
             Customer detailsOfCustomer = context.Customers.Find(id);
@@ -109,5 +115,9 @@ namespace JPCreations.Controllers
                 return View();
             }
         }
+    }
+
+    internal class RoleName
+    {
     }
 }

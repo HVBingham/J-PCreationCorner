@@ -93,6 +93,7 @@ namespace JPCreations.Controllers
                 editProduct.Category = product.Category;
                 editProduct.ImageId = product.ImageId;
                 editProduct.IsActive = product.IsActive;
+                editProduct.Quantity = product.Quantity;
                 ViewBag.Images = new SelectList(context.Images.ToList(), "Id", "Title");
                 return RedirectToAction("Index");
             }

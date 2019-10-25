@@ -15,9 +15,11 @@ namespace JPCreations.Models
         public string ProductName { get; set; }
         public string Category { get; set; }
         public string Description { get; set; }
+        [DataType(DataType.Currency)]
         public double Price { get; set; } 
         [Display(Name ="Currently An Active item?")]
         public bool IsActive { get; set; }
+        public int Quantity { get; set; }
         [ForeignKey("Image")]
         [Display(Name ="Product Image")]
         public int ImageId { get; set; }
