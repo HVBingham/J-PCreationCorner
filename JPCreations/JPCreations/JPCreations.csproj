@@ -49,6 +49,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -191,16 +192,38 @@
     <Compile Include="Migrations\201910251500580_addtiontomodel.Designer.cs">
       <DependentUpon>201910251500580_addtiontomodel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910251717346_nullabletype.cs" />
+    <Compile Include="Migrations\201910251717346_nullabletype.Designer.cs">
+      <DependentUpon>201910251717346_nullabletype.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910271924155_additiontocutsomer.cs" />
+    <Compile Include="Migrations\201910271924155_additiontocutsomer.Designer.cs">
+      <DependentUpon>201910271924155_additiontocutsomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910272009127_movingpurhcasequant.cs" />
+    <Compile Include="Migrations\201910272009127_movingpurhcasequant.Designer.cs">
+      <DependentUpon>201910272009127_movingpurhcasequant.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910272014076_updationofmodel.cs" />
+    <Compile Include="Migrations\201910272014076_updationofmodel.Designer.cs">
+      <DependentUpon>201910272014076_updationofmodel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910281606116_updatecustomermodel.cs" />
+    <Compile Include="Migrations\201910281606116_updatecustomermodel.Designer.cs">
+      <DependentUpon>201910281606116_updatecustomermodel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CustomerCart.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IndexViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Moderator.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductsViewModel.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -274,8 +297,10 @@
     <Content Include="Views\Products\Delete.cshtml" />
     <Content Include="Views\Products\Create.cshtml" />
     <Content Include="Views\Products\Deactivated.cshtml" />
+    <Content Include="Views\Customers\Email.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\ProductDetails.cshtml" />
+    <Content Include="Views\Customers\CustomerCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -306,6 +331,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910251500580_addtiontomodel.resx">
       <DependentUpon>201910251500580_addtiontomodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910251717346_nullabletype.resx">
+      <DependentUpon>201910251717346_nullabletype.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910271924155_additiontocutsomer.resx">
+      <DependentUpon>201910271924155_additiontocutsomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910272009127_movingpurhcasequant.resx">
+      <DependentUpon>201910272009127_movingpurhcasequant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910272014076_updationofmodel.resx">
+      <DependentUpon>201910272014076_updationofmodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910281606116_updatecustomermodel.resx">
+      <DependentUpon>201910281606116_updatecustomermodel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

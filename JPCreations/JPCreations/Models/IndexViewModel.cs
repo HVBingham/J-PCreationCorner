@@ -5,10 +5,7 @@ using System.Web;
 
 namespace JPCreations.Models
 {
-    public class ProductsViewModel
+    public class IndexViewModel
     {
-        public Product Product { get; set; }
-        public Customer Customer { get; set; }
-
     }
 }

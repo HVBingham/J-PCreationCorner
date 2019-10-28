@@ -1,61 +1,52 @@
-﻿@model JPCreations.Models.Product
+﻿@model JPCreations.Models.ProductsViewModel
 
 @{
     ViewBag.Title = "ProductDetails";
 }
 
-<h2>ProductDetails</h2>
+<h2>Product Details</h2>
 
 <div>
-    <h4>Product</h4>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ProductName)
+            @Html.DisplayNameFor(model => model.Product.ProductName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProductName)
+            @Html.DisplayFor(model => model.Product.ProductName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Category)
+            @Html.DisplayNameFor(model => model.Product.Category)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Category)
+            @Html.DisplayFor(model => model.Product.Category)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Product.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Product.Description)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.Product.Price)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => model.Product.Price)
         </dd>
-
-        @*<dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>*@
-
         <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
+            @Html.DisplayNameFor(model => model.Product.Quantity)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Quantity)
+            @Html.DisplayFor(model => model.Product.Quantity)
         </dd>
 
         <dt>
@@ -63,11 +54,30 @@
         </dt>
 
         <dd>
-            <img src="@Url.Content(Model.Image.ImagePath)" width="200", height="250" />
+            <img src="@Url.Content(Model.Product.Image.ImagePath)" width="200" , height="250" />
         </dd>
-
     </dl>
 </div>
-<p
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Product.PurchaseQuantity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Product.PurchaseQuantity, " ", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add to cart" class="btn btn-default" />
+        </div>
+    </div>
+}
+    <p>
+        @Html.ActionLink("Back to List", "Index")|
+        @*@Html.ActionLink("Send Request for Custom Item", "Email", new { id = Model.Customer.Id }, "Customers")*@
+    </p>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

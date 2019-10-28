@@ -72,10 +72,10 @@ namespace JPCreations.Controllers
         // GET: Products/Edit/5
         public ActionResult Edit(int id)
         {
-            
-            Product product = context.Products.Where(p => p.Id == id).SingleOrDefault();
-            ViewBag.Images = new SelectList(context.Images.ToList(), "Id", "Title");
-
+            var images = context.Images.ToList();
+            Product product = context.Products.Include(p=>p.Image).Where(p => p.Id == id).SingleOrDefault();
+            //ViewBag.Images = new SelectList(context.Images.ToList(), "Id", "Title");
+            product.Images = images;
             return View(product);
         }
 
@@ -86,7 +86,7 @@ namespace JPCreations.Controllers
             
             try
             {
-                Product editProduct = context.Products.Find(id);
+                Product editProduct = context.Products.Include(p => p.Image).Where(p => p.Id == id).SingleOrDefault();
                 editProduct.ProductName = product.ProductName;
                 editProduct.Price = product.Price;
                 editProduct.Description = editProduct.Description;
@@ -94,7 +94,8 @@ namespace JPCreations.Controllers
                 editProduct.ImageId = product.ImageId;
                 editProduct.IsActive = product.IsActive;
                 editProduct.Quantity = product.Quantity;
-                ViewBag.Images = new SelectList(context.Images.ToList(), "Id", "Title");
+                context.SaveChanges();
+                //ViewBag.Images = new SelectList(context.Images.ToList(), "Id", "Title");
                 return RedirectToAction("Index");
             }
             catch

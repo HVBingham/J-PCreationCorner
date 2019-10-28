@@ -7,6 +7,7 @@
 <h2>Index</h2>
 
 
+
 <table class="table">
     <tr>
         <th>
@@ -21,9 +22,13 @@
         <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
-   
+       
         <th>
-            @Html.DisplayNameFor(model => model.Image.Title)
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+       
+        <th>
+            @Html.Label("Image")
         </th>
         <th></th>
     </tr>
@@ -42,11 +47,16 @@
         <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
+      
         <td>
-           <img src="@Url.Content(item.Image.ImagePath)" width="100", height="150" />
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+     
+        <td>
+            <img src="@Url.Content(item.Image.ImagePath)" width="200" height="250" />
         </td>
         <td>
-            @Html.ActionLink("Product Details", "ProductDetails", new {id=item.Id})
+            @Html.ActionLink("Details", "ProductDetails", new { id=item.Id }) 
         </td>
     </tr>
 }

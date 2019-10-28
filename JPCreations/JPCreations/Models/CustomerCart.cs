@@ -8,8 +8,8 @@ namespace JPCreations.Models
 {
     public class CustomerCart
     {
-        public Customer Customer { get; set; }
         public List<Product> Products { get; set; }
+
         [DataType(DataType.Currency)]
         public double Total { get; set; }
     }

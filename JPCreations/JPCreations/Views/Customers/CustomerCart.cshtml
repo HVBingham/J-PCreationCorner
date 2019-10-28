@@ -1,0 +1,79 @@
+﻿@model JPCreations.Models.Customer
+
+@{
+    ViewBag.Title = "CustomerCart1";
+}
+
+
+<h2>CustomerCart</h2>
+
+<div>
+    <h4>CustomerCart</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.customerCart.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customerCart.Total)
+        </dd>
+
+    </dl>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Product Name")
+        </th>
+        <th>
+            @Html.Label("Category")
+        </th>
+        <th>
+            @Html.Label("Description")
+        </th>
+        <th>
+            @Html.Label("Price")
+        </th>
+
+        <th>
+            @Html.Label("Image")
+        </th>
+        <th>
+            @Html.Label("Quantity")
+        </th>
+    </tr>
+
+    @foreach (var item in Model.customerCart.Products)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <img src="@Url.Content(item.Image.ImagePath)" width="100" , height="150" />
+            </td>
+            <td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PurchaseQuantity)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<p>
+
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
