@@ -20,12 +20,20 @@ namespace JPCreations.Controllers
             
         }
         // GET: Customers
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-         
-            var listofProducts = context.Products.Include(p => p.Image).Where(p=>p.Quantity>=1 & p.IsActive==true).ToList();
+           var listOfProducts = context.Products.Include(p => p.Image).Where(p=>p.Quantity>=1 & p.IsActive==true).ToList();
+            ProductsIndexView products = new ProductsIndexView();
+            products.Products = new List<Product>();
+            products.Customer = context.Customers.Where(c=>c.Id==id).SingleOrDefault();
+            for(int i=0; i<listOfProducts.Count; i++)
+            {
+                var productAdd = listOfProducts[i];
+                products.Products.Add(productAdd);
+            }
             
-            return View(listofProducts);
+            
+            return View(products);
         }
         public ActionResult ProductDetails(int id)
         {
@@ -40,15 +48,15 @@ namespace JPCreations.Controllers
         {
             var quantity = context.Products.Find(id);
             quantity.PurchaseQuantity = product.PurchaseQuantity;
+            
             context.SaveChanges();
-            return RedirectToAction("CustomerCart", new { Id = id });
+            return RedirectToAction("CustomerCart", new { productId = id }) ;
         }
-        public ActionResult CustomerCart(int productId, int custyId)
+        public ActionResult CustomerCart(int productId)
         {
            
             CustomerCart customerCart = new CustomerCart();
             customerCart.Products = new List<Product>();
-            Customer customer = context.Customers.Find(custyId);
             var productAdd = context.Products.Include(p => p.Image).Where(p => p.Id == productId).SingleOrDefault();
             customerCart.Products.Add(productAdd);
             for(int i = 0; i<customerCart.Products.Count; i++)
@@ -63,7 +71,7 @@ namespace JPCreations.Controllers
                
             }
 
-            customer.customerCart = customerCart;
+           
             
             return View(customerCart);
         }
@@ -95,7 +103,8 @@ namespace JPCreations.Controllers
                 customer.ApplicationId = User.Identity.GetUserId();
                 context.Customers.Add(customer);
                 context.SaveChanges();
-                return RedirectToAction("Index");
+                var Id = customer.Id;
+                return RedirectToAction("Index", new { id = Id });
             }
             catch
             {
@@ -160,25 +169,28 @@ namespace JPCreations.Controllers
             }
         }
 
+
+
+
+
+
         public ActionResult Email(int id)
         {
-            Customer customer = context.Customers.Find(id);
+            Customer customer = context.Customers.Where(c => c.Id == id).SingleOrDefault();
             return View(customer);
         }
         [HttpPost]
-        public ActionResult Email(Customer customer,string subject, string message)
+        public ActionResult Email(Customer customer, string subject, string message)
         {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    
-                    var userEmail = customer.ApplicationUser.Email;
-                    var userName = customer.FirstName;
-                    var moderatorsEmail = ModEmail();
-                    var senderEmail = new MailAddress(userEmail, userName);
-                    var receiverEmail = new MailAddress(moderatorsEmail);
-                    var password = "Your Email Password here";
+            
+            
+               
+
+
+                  
+                    var senderEmail = new MailAddress("SampleCustomers2019k@gmail.com");
+                    var receiverEmail = new MailAddress("samplemoderator2019k@yahoo.com");
+                    var password = "AbcPassword1!";
                     var sub = subject;
                     var body = message;
                     var smtp = new SmtpClient
@@ -198,26 +210,14 @@ namespace JPCreations.Controllers
                     {
                         smtp.Send(mess);
                     }
-                    return View();
-                }
-            }
-            catch (Exception)
-            {
-                ViewBag.Error = "Some Error";
-            }
-            return View();
+                     var Id = customer.Id;
+                    return RedirectToAction("Index", "Customers", new { id=Id});
+                
+            
+         
+           
         }
-        public string ModEmail()
-        {
-            var moderators = context.Moderators.ToList();
-            for (int i = 0; i < moderators.Count; i++)
-            {
-                var modEmail = moderators[i].ApplicationUser.Email.ToString();
-                return modEmail;
-            }
-            return null;
-
-        }
+      
     }
     
 

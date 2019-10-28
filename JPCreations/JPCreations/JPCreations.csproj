@@ -218,10 +218,10 @@
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\IndexViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Moderator.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductsIndexView.cs" />
     <Compile Include="Models\ProductsViewModel.cs" />
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -298,9 +298,9 @@
     <Content Include="Views\Products\Create.cshtml" />
     <Content Include="Views\Products\Deactivated.cshtml" />
     <Content Include="Views\Customers\Email.cshtml" />
-    <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\ProductDetails.cshtml" />
     <Content Include="Views\Customers\CustomerCart.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

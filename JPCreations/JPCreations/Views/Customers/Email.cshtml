@@ -2,20 +2,24 @@
 @{
     ViewBag.Title = "Email";
 }
-
-<h2>Email</h2>
-<br />
-<br />
-@if (ViewBag.Error != null){<h2>@ViewBag.Error</h2>}
-<form method="post" action="Email">
-    <div class="container">
-        <br />
-        <span class="form-control-static">Subject:</span><input class="form-control" type="text" name="subject" />
-        <br />
-        <span class="form-control-static">Message:</span><input class="form-control" type="text" name="message" />
-        <br />
-        <input class="btn btn-primary" type="submit" value="Send" />
-    </div> 
-</form>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h2>Email</h2>
+    <br />
+    <br />
+    if (ViewBag.Error != null)
+    {<h2>@ViewBag.Error</h2>}
+    <form method="post" action="Email">
+        <div class="container">
+            <br />
+            <span class="form-control-static">Subject:</span><input class="form-control" type="text" name="subject" />
+            <br />
+            <span class="form-control-static">Message:</span><input class="form-control" type="text" name="message" />
+            <br />
+            <input class="btn btn-primary" type="submit" value="Send" />
+        </div>
+    </form>
+}
 
 

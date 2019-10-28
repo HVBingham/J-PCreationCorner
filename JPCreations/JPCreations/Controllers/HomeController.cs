@@ -18,16 +18,7 @@ namespace JPCreations.Controllers
         }
         public ActionResult Index()
         {
-            // var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            // var role = UserManager.GetRoles(User.Identity.GetUserId());
-            // if (role[0].ToString() == RoleName.Customer)
-            // {
-            //     return RedirectToAction("Index", "Customers");
-            // }
-            //else
-            //{
-            //     return RedirectToAction("Index", "Moderators");
-            //}
+          
             return View();
 
         }
