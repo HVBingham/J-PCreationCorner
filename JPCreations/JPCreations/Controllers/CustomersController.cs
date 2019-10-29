@@ -18,7 +18,6 @@ namespace JPCreations.Controllers
             context = new ApplicationDbContext();
             
         }
-        // GET: Customers
         public ActionResult Index(int id)
         {
            var listOfProducts = context.Products.Include(p => p.Image).Where(p=>p.Quantity>=1 & p.IsActive==true).ToList();
@@ -30,8 +29,6 @@ namespace JPCreations.Controllers
                 var productAdd = listOfProducts[i];
                 products.Products.Add(productAdd);
             }
-            
-            
             return View(products);
         }
         public ActionResult ProductDetails(int id,int custId)
@@ -45,11 +42,12 @@ namespace JPCreations.Controllers
             return View(productsView);
         }
         [HttpPost]
-        public ActionResult ProductDetails(int id,ProductsViewModel productsView)
+        public ActionResult ProductDetails(int id,int custid,ProductsViewModel productsView)
         {
+            productsView.Product = context.Products.Include(p => p.Image).Where(p => p.Id == id).SingleOrDefault();
+            productsView.Customer = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == custid).SingleOrDefault();
             var quantity = context.Products.Include(p=>p.Image).Where(p => p.Id == id).SingleOrDefault();
             quantity.PurchaseQuantity = productsView.Product.PurchaseQuantity;
-            
             context.SaveChanges();
             return RedirectToAction("CustomerCart", new { productId = id, custId=productsView.Customer.Id }) ;
         }
@@ -62,24 +60,16 @@ namespace JPCreations.Controllers
             customerCart.Products.Add(productAdd);
             for(int i = 0; i<customerCart.Products.Count; i++)
             {
-               
                 customerCart.Products[i].Quantity-=customerCart.Products[i].PurchaseQuantity;
                 var price = customerCart.Products[i].Price * (Convert.ToDouble(customerCart.Products[i].PurchaseQuantity));
                 customerCart.Total += price;
-                
-                context.SaveChanges();
-
-               
-            }
-
-           
-            
+                context.SaveChanges();  
+            }            
             return View(customer);
         }
         [HttpPost]
         public ActionResult CustomerCart(Customer customer)
-        {
-
+        { 
             return View();
         }
         public ActionResult Details(int id)
@@ -87,15 +77,11 @@ namespace JPCreations.Controllers
             Customer detailsOfCustomer = context.Customers.Find(id);
             return View(detailsOfCustomer);
         }
-
-        // GET: Customers/Create
         public ActionResult Create()
         {
             Customer newCustomer = new Customer();
             return View(newCustomer);
         }
-
-        // POST: Customers/Create
         [HttpPost]
         public ActionResult Create(Customer customer)
         {
@@ -112,22 +98,17 @@ namespace JPCreations.Controllers
                 return View();
             }
         }
-
-        // GET: Customers/Edit/5
         public ActionResult Edit(int id)
         {
             Customer editCustomer = context.Customers.Find(id);
 
             return View(editCustomer);
         }
-
-        // POST: Customers/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, Customer customer)
         {
             try
             {
-
                 var editCustomer = context.Customers.Find(id);
                 editCustomer.FirstName = customer.FirstName;
                 editCustomer.LastName = customer.LastName;
@@ -136,7 +117,6 @@ namespace JPCreations.Controllers
                 editCustomer.State = customer.State;
                 editCustomer.ZipCode = customer.ZipCode;
                 context.SaveChanges();
-
                 return RedirectToAction("Index");
             }
             catch
@@ -144,15 +124,11 @@ namespace JPCreations.Controllers
                 return View();
             }
         }
-
-        // GET: Customers/Delete/5
         public ActionResult Delete(int id)
         {
             Customer removeCustomer = context.Customers.Find(id);
             return View(removeCustomer);
         }
-
-        // POST: Customers/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, Customer customer)
         {
@@ -169,12 +145,6 @@ namespace JPCreations.Controllers
                 return View();
             }
         }
-
-
-
-
-
-
         public ActionResult Email(int id)
         {
             Customer customer = context.Customers.Include(c=>c.ApplicationUser).Where(c=>c.Id==id).SingleOrDefault();
@@ -218,8 +188,5 @@ namespace JPCreations.Controllers
                 var Id = customer.Id;
             return RedirectToAction("Index", "Customers", new { id=Id});
         }
-       
     }
- 
-   
 }

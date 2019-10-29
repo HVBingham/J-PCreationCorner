@@ -7,6 +7,16 @@
 <h2>Product Details</h2>
 
 <div>
+    @Html.HiddenFor(model=>model.Customer.Id)
+    @Html.HiddenFor(model=>model.Customer.FirstName)
+    @Html.HiddenFor(model=>model.Customer.LastName)
+    @Html.HiddenFor(model=>model.Customer.ApplicationUser)
+    @Html.HiddenFor(model=>model.Customer.StreetAddress)
+    @Html.HiddenFor(model=>model.Customer.State)
+    @Html.HiddenFor(model=>model.Customer.City)
+    @Html.HiddenFor(model=>model.Customer.State)
+    @Html.HiddenFor(model=>model.Customer.ZipCode)
+    @Html.HiddenFor(model=>model.Customer.ApplicationId)
 
     <hr />
     <dl class="dl-horizontal">
@@ -70,7 +80,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Add to cart" class="btn btn-default" />
+            <input type="submit" value="Add to cart" class="btn btn-primary" />
         </div>
     </div>
 }

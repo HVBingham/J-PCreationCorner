@@ -5,6 +5,16 @@
 }
 
 <h2>Index</h2>
+@Html.HiddenFor(model => model.Customer.Id)
+@Html.HiddenFor(model => model.Customer.FirstName)
+@Html.HiddenFor(model => model.Customer.LastName)
+@Html.HiddenFor(model => model.Customer.ApplicationUser)
+@Html.HiddenFor(model => model.Customer.StreetAddress)
+@Html.HiddenFor(model => model.Customer.State)
+@Html.HiddenFor(model => model.Customer.City)
+@Html.HiddenFor(model => model.Customer.State)
+@Html.HiddenFor(model => model.Customer.ZipCode)
+@Html.HiddenFor(model => model.Customer.ApplicationId)
 <table class="table">
     <tr>
         <th>
@@ -50,13 +60,13 @@
                 @Html.DisplayFor(modelItem => item.PurchaseQuantity)
             </td>
             <td>
-               | @Html.ActionLink("Product Details", "ProductDetails", new { id = item.Id, custId = Model.Customer.Id })|
+                | @Html.ActionLink("Product Details", "ProductDetails", new { id = item.Id, custId = Model.Customer.Id })|
                 <br />
-          
+
             </td>
         </tr>
     }
-   
-    
+
+
 
 </table>
