@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using JPCreations.Models;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity;
+using System.Net.Mail;
+using System.Net;
 
 namespace JPCreations.Controllers
 {
@@ -17,7 +20,7 @@ namespace JPCreations.Controllers
         }
         public ActionResult Index()
         {
-            var listofCustomers = context.Customers.ToList();
+            var listofCustomers = context.Customers.Include(c => c.ApplicationUser).ToList();
             return View(listofCustomers);
         }
 
@@ -77,28 +80,54 @@ namespace JPCreations.Controllers
                 return View();
             }
         }
+        
+        public ActionResult ShippedEmail(int id)
+        {
+            Customer customer = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == id).SingleOrDefault();
+            return View(customer);
+        }
+        [HttpPost]
+        public ActionResult ShippedEmail(int id, Customer customer)
+        {
 
-        // GET: Moderators/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-           
-        //    return View();
-        //}
+            var user = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == customer.Id).SingleOrDefault();
+            var userEmail = user.ApplicationUser.Email;
+            var moderatorList = context.Moderators.Include(m => m.ApplicationUser).ToList();
+            List<string> ModeratorEmails = new List<string>();
+            for (int i = 0; i < moderatorList.Count; i++)
+            {
+                var ModEmails = moderatorList[i].ApplicationUser.Email.ToString();
+                ModeratorEmails.Add(ModEmails);
+            }
+            var senderEmail = new MailAddress(userEmail);
+            var receiverEmail = new MailAddress(ModeratorEmails[1]);
 
-        //// POST: Moderators/Delete/5
-        //[HttpPost]
-        //public ActionResult Delete(int id, FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add delete logic here
+            var password = "AbcPassword1!";
+            var sub = "Your Package Has Shipped";
+            var body = "Your Order for has Shipped.";
+            var smtp = new SmtpClient()
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(senderEmail.Address, password)
+            };
+            using (var mess = new MailMessage(senderEmail, receiverEmail)
+            {
+                Subject = sub,
+                Body = body
+            })
+            {
+                smtp.Send(mess);
+            }
+            var Id = customer.Id;
+            return View();
 
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+
+            
+        }
+    
     }
 }

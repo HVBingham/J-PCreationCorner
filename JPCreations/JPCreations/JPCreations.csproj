@@ -301,6 +301,7 @@
     <Content Include="Views\Customers\ProductDetails.cshtml" />
     <Content Include="Views\Customers\CustomerCart.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\Moderators\ShippedEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
