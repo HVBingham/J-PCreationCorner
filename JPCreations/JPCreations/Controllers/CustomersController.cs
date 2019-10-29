@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
+using System.Net;
+using System.Net.Mail;
 using System.Web.Mvc;
 using JPCreations.Models;
 using Microsoft.AspNet.Identity;
-using System.Data.Entity;
-using System.Net.Mail;
-using System.Net;
 
 namespace JPCreations.Controllers
 {
@@ -35,27 +34,29 @@ namespace JPCreations.Controllers
             
             return View(products);
         }
-        public ActionResult ProductDetails(int id)
+        public ActionResult ProductDetails(int id,int custId)
         {
             ProductsViewModel productsView = new ProductsViewModel();
             productsView.Product = new Product();
+            productsView.Customer = context.Customers.Include(c=>c.ApplicationUser).Where(c => c.Id == custId).SingleOrDefault();
             Product product = context.Products.Include(p => p.Image).Where(p => p.Id == id).SingleOrDefault();
             productsView.Product = product;
+
             return View(productsView);
         }
         [HttpPost]
-        public ActionResult ProductDetails(int id,Product product)
+        public ActionResult ProductDetails(int id,ProductsViewModel productsView)
         {
-            var quantity = context.Products.Find(id);
-            quantity.PurchaseQuantity = product.PurchaseQuantity;
+            var quantity = context.Products.Include(p=>p.Image).Where(p => p.Id == id).SingleOrDefault();
+            quantity.PurchaseQuantity = productsView.Product.PurchaseQuantity;
             
             context.SaveChanges();
-            return RedirectToAction("CustomerCart", new { productId = id }) ;
+            return RedirectToAction("CustomerCart", new { productId = id, custId=productsView.Customer.Id }) ;
         }
-        public ActionResult CustomerCart(int productId)
+        public ActionResult CustomerCart(int productId,int custId)
         {
-           
-            CustomerCart customerCart = new CustomerCart();
+            var customer = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == custId).SingleOrDefault();
+            CustomerCart customerCart = customer.customerCart;
             customerCart.Products = new List<Product>();
             var productAdd = context.Products.Include(p => p.Image).Where(p => p.Id == productId).SingleOrDefault();
             customerCart.Products.Add(productAdd);
@@ -73,10 +74,10 @@ namespace JPCreations.Controllers
 
            
             
-            return View(customerCart);
+            return View(customer);
         }
         [HttpPost]
-        public ActionResult CustomerCart(CustomerCart customerCart)
+        public ActionResult CustomerCart(Customer customer)
         {
 
             return View();
@@ -176,50 +177,49 @@ namespace JPCreations.Controllers
 
         public ActionResult Email(int id)
         {
-            Customer customer = context.Customers.Where(c => c.Id == id).SingleOrDefault();
+            Customer customer = context.Customers.Include(c=>c.ApplicationUser).Where(c=>c.Id==id).SingleOrDefault();
             return View(customer);
         }
         [HttpPost]
         public ActionResult Email(Customer customer, string subject, string message)
         {
-            
-            
-               
+            var user = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == customer.Id).SingleOrDefault();
+            var userEmail = user.ApplicationUser.Email;
+            var moderatorList = context.Moderators.Include(m=>m.ApplicationUser).ToList();
+            List<string> ModeratorEmails = new List<string>();
+            for (int i =0; i<moderatorList.Count; i++)
+            {
+              var  ModEmails = moderatorList[i].ApplicationUser.Email.ToString();
+                ModeratorEmails.Add(ModEmails);
+            }
+            var senderEmail = new MailAddress(userEmail);
+            var receiverEmail = new MailAddress(ModeratorEmails[1]);
 
-
-                  
-                    var senderEmail = new MailAddress("SampleCustomers2019k@gmail.com");
-                    var receiverEmail = new MailAddress("samplemoderator2019k@yahoo.com");
-                    var password = "AbcPassword1!";
-                    var sub = subject;
-                    var body = message;
-                    var smtp = new SmtpClient
-                    {
-                        Host = "smtp.gmail.com",
-                        Port = 587,
-                        EnableSsl = true,
-                        DeliveryMethod = SmtpDeliveryMethod.Network,
-                        UseDefaultCredentials = false,
-                        Credentials = new NetworkCredential(senderEmail.Address, password)
-                    };
-                    using (var mess = new MailMessage(senderEmail, receiverEmail)
-                    {
-                        Subject = subject,
-                        Body = body
-                    })
-                    {
-                        smtp.Send(mess);
-                    }
-                     var Id = customer.Id;
-                    return RedirectToAction("Index", "Customers", new { id=Id});
-                
-            
-         
-           
+            var password = "AbcPassword1!";
+            var sub = subject;
+            var body = message;
+            var smtp = new SmtpClient()
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(senderEmail.Address, password)
+            };
+            using (var mess = new MailMessage(senderEmail, receiverEmail)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(mess);
+            }
+                var Id = customer.Id;
+            return RedirectToAction("Index", "Customers", new { id=Id});
         }
-      
+       
     }
-    
-
+ 
    
 }
