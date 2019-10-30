@@ -20,8 +20,9 @@ namespace JPCreations.Controllers
         }
         public ActionResult Index()
         {
-            var listofproducts = context.Products.Include(p => p.Image).Where(p=>p.IsActive==true).ToList();
-            return View(listofproducts);
+            ProductsViewModel productsView = new ProductsViewModel();
+            ViewBag.Products = productsView.findAll();
+                return View();
         }
         public ActionResult Deactivated()
         {

@@ -7,7 +7,20 @@ namespace JPCreations.Models
 {
     public class ProductsViewModel
     {
-        public Product Product { get; set; }
+        public List<Product> products;
+        public ProductsViewModel()
+        {
+            this.products = new List<Product>();
+        }
+        public List<Product> findAll()
+        {
+            return this.products;
+        }
+
+        public Product find(int id)
+        {
+            return this.products.Single(p => p.Id.Equals(id));
+        }
         public Customer Customer { get; set; }
 
     }

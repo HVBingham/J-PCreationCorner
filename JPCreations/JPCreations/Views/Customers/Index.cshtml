@@ -1,4 +1,4 @@
-﻿@model JPCreations.Models.ProductsIndexView
+﻿@model JPCreations.Models.ProductsViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -37,30 +37,30 @@
             @Html.Label("Quantity")
         </th>
     </tr>
-    @foreach (var item in Model.Products)
+    @foreach (var product in Model.products)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
+                @Html.DisplayFor(modelProduct=>product.ProductName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category)
+                @Html.DisplayFor(modelProduct => product.Category)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelProduct=> product.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelProduct => product.Price)
             </td>
             <td>
-                <img src="@Url.Content(item.Image.ImagePath)" width="100" , height="150" />
+                <img src="@Url.Content(product.Image.ImagePath)" width="100" , height="150" />
             </td>
             <td>
             <td>
-                @Html.DisplayFor(modelItem => item.PurchaseQuantity)
+                @Html.DisplayFor(modelProduct => product.PurchaseQuantity)
             </td>
             <td>
-                | @Html.ActionLink("Product Details", "ProductDetails", new { id = item.Id, custId = Model.Customer.Id })|
+                | @Html.ActionLink("Product Details", "ProductDetails", new { id = product.Id, custId = Model.Customer.Id })|
                 <br />
 
             </td>

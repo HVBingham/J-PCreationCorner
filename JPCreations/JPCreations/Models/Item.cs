@@ -5,7 +5,9 @@ using System.Web;
 
 namespace JPCreations.Models
 {
-    public class Order
+    public class Item
     {
+        public Product Product { get; set; }
+        public int Quantity { get; set; }
     }
 }

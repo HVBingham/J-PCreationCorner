@@ -20,58 +20,35 @@ namespace JPCreations.Controllers
         }
         public ActionResult Index(int id)
         {
-           var listOfProducts = context.Products.Include(p => p.Image).Where(p=>p.Quantity>=1 & p.IsActive==true).ToList();
-            ProductsIndexView products = new ProductsIndexView();
-            products.Products = new List<Product>();
-            products.Customer = context.Customers.Where(c=>c.Id==id).SingleOrDefault();
-            for(int i=0; i<listOfProducts.Count; i++)
+            List<Product> productsList = context.Products.Include(p=>p.Image).Where(p=>p.IsActive==true & p.Quantity>=1).ToList();
+            Customer customer = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == id).SingleOrDefault();
+            ProductsViewModel productsView = new ProductsViewModel();
+            productsView.Customer = customer;
+            for(int i =0; i<productsList.Count; i++)
             {
-                var productAdd = listOfProducts[i];
-                products.Products.Add(productAdd);
+                productsView.products.Add(productsList[i]);
             }
-            return View(products);
+            
+            return View(productsView);
         }
         public ActionResult ProductDetails(int id,int custId)
         {
             ProductsViewModel productsView = new ProductsViewModel();
-            productsView.Product = new Product();
+            productsView.products = new List<Product>();
             productsView.Customer = context.Customers.Include(c=>c.ApplicationUser).Where(c => c.Id == custId).SingleOrDefault();
             Product product = context.Products.Include(p => p.Image).Where(p => p.Id == id).SingleOrDefault();
-            productsView.Product = product;
+            productsView.products.Add(product);
 
             return View(productsView);
         }
         [HttpPost]
-        public ActionResult ProductDetails(int id,int custid,ProductsViewModel productsView)
+        public ActionResult ProductDetails()
         {
-            productsView.Product = context.Products.Include(p => p.Image).Where(p => p.Id == id).SingleOrDefault();
-            productsView.Customer = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == custid).SingleOrDefault();
-            var quantity = context.Products.Include(p=>p.Image).Where(p => p.Id == id).SingleOrDefault();
-            quantity.PurchaseQuantity = productsView.Product.PurchaseQuantity;
-            context.SaveChanges();
-            return RedirectToAction("CustomerCart", new { productId = id, custId=productsView.Customer.Id }) ;
-        }
-        public ActionResult CustomerCart(int productId,int custId)
-        {
-            var customer = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == custId).SingleOrDefault();
-            CustomerCart customerCart = customer.customerCart;
-            customerCart.Products = new List<Product>();
-            var productAdd = context.Products.Include(p => p.Image).Where(p => p.Id == productId).SingleOrDefault();
-            customerCart.Products.Add(productAdd);
-            for(int i = 0; i<customerCart.Products.Count; i++)
-            {
-                customerCart.Products[i].Quantity-=customerCart.Products[i].PurchaseQuantity;
-                var price = customerCart.Products[i].Price * (Convert.ToDouble(customerCart.Products[i].PurchaseQuantity));
-                customerCart.Total += price;
-                context.SaveChanges();  
-            }            
-            return View(customer);
-        }
-        [HttpPost]
-        public ActionResult CustomerCart(Customer customer)
-        { 
+            
+            
             return View();
         }
+      
         public ActionResult Details(int id)
         {
             Customer detailsOfCustomer = context.Customers.Find(id);

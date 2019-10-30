@@ -1,0 +1,61 @@
+﻿@model JPCreations.Models.Customer
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Shopping Cart</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Product Name:")
+        </th>
+        <th>
+            @Html.Label("Category:")
+        </th>
+        <th>
+            @Html.Label("Description:")
+        </th>
+        <th>
+            @Html.Label("Price:")
+        </th>
+        <th>
+            @Html.Label("Photo:")
+        </th>
+        <th>
+            @Html.Label("Quantity")
+        </th>
+        <th>
+            @Html.Label("Sub-total")
+        </th>
+    </tr>
+    @foreach(var item in Model.Cart)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem=>item.Product.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem=>item.Product.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem=>item.Product.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modeItem=>item.Product.Price)
+            </td>
+            <td>
+                <img src="@Url.Content(item.Product.Image.ImagePath)" width="350" height="450" />
+            </td>
+            <td>
+               @Html.DisplayFor(modelItem => item.Quantity)
+            <td>
+                
+            </td>
+
+        </tr>
+    }
+   
+    
+</table>
+
+

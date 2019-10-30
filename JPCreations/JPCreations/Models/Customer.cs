@@ -31,8 +31,9 @@ namespace JPCreations.Models
         [ForeignKey("ApplicationUser")]
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+        public List<Item> Cart { get; set; }
 
-        public CustomerCart customerCart = new CustomerCart();
+        
         
     }
 }
