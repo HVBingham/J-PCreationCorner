@@ -1,14 +1,16 @@
 ﻿@model JPCreations.Models.Product
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "DetailsUser";
 }
 
-<h2>Details</h2>
+<h2>Detail</h2>
 
 <div>
+    <h3> To Purchase Products Please Sign-Up. Click the register tab to get started.</h3>
     <h4>Product</h4>
     <hr />
+    
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.ProductName)
@@ -41,16 +43,25 @@
         <dd>
             @Html.DisplayFor(model => model.Price)
         </dd>
+
         <dt>
-            @Html.DisplayNameFor(model=>model.Image.ImagePath)
+            @Html.DisplayNameFor(model => model.Quantity)
         </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.Label("Photo")
+        </dt>
+
         <dd>
             <img src="@Url.Content(Model.Image.ImagePath)" width="350" height="450" />
         </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+  
+    @Html.ActionLink("Back to List", "IndexUser", "Products")
 </p>

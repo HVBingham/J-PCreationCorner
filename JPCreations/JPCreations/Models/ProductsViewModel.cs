@@ -19,7 +19,7 @@ namespace JPCreations.Models
 
         public Product find(int id)
         {
-            return this.products.Single(p => p.Id.Equals(id));
+            return this.products.FirstOrDefault(p => p.Id.Equals(id));
         }
         public Customer Customer { get; set; }
 

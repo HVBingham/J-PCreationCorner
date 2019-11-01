@@ -22,7 +22,17 @@ namespace JPCreations.Controllers
         {
             ProductsViewModel productsView = new ProductsViewModel();
             ViewBag.Products = productsView.findAll();
-                return View();
+            return View();
+        }
+        public  ActionResult IndexUser()
+        {
+            var listOfProducts = context.Products.Include(p => p.Image).Where(p => p.IsActive == true & p.Quantity >= 1).ToList();
+            return View(listOfProducts);
+        }
+        public ActionResult DetailsUser(int id)
+        {
+            var product = context.Products.Include(p => p.Image).Where(p => p.Id == id).SingleOrDefault();
+            return View(product);
         }
         public ActionResult Deactivated()
         {

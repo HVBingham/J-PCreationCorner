@@ -66,9 +66,6 @@
         <dd>
             <img src="@Url.Content(Model.products[0].Image.ImagePath)" width="200" , height="250" />
         </dd>
-        <dt>
-            @Html.Label("Buy Product")
-        </dt>
         <dd>
             <a href="@Url.Action( "Buy", "Cart", new {id=Model.products[0].Id, custId=Model.Customer.Id})"> Add to cart!</a>
         </dd>

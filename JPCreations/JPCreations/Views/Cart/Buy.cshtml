@@ -1,6 +1,6 @@
 ﻿@model JPCreations.Models.Customer
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Buy";
 }
 
 <h2>Shopping Cart</h2>
@@ -28,34 +28,33 @@
             @Html.Label("Sub-total")
         </th>
     </tr>
-    @foreach(var item in Model.Items)
+    @foreach (var item in Model.Items)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem=>item.Product.ProductName)
+                @Html.DisplayFor(modelItem => item.Product.ProductName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem=>item.Product.Category)
+                @Html.DisplayFor(modelItem => item.Product.Category)
             </td>
             <td>
-                @Html.DisplayFor(modelItem=>item.Product.Description)
+                @Html.DisplayFor(modelItem => item.Product.Description)
             </td>
             <td>
-                @Html.DisplayFor(modeItem=>item.Product.Price)
+                @Html.DisplayFor(modeItem => item.Product.Price)
             </td>
             <td>
                 <img src="@Url.Content(item.Product.Image.ImagePath)" width="350" height="450" />
             </td>
             <td>
-               @Html.DisplayFor(modelItem => item.Quantity)
+                @Html.DisplayFor(modelItem => item.Quantity)
             <td>
-                
             </td>
 
         </tr>
     }
-   
-    
+
+
 </table>
 
 
