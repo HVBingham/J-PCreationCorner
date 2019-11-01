@@ -38,9 +38,28 @@ namespace JPCreationsCornerV2._0.Areas.Admin.Controllers
                 string slug;
                 PageDTO dto = new PageDTO();
                 dto.Title = model.Title;
-
+                if (string.IsNullOrWhiteSpace(model.Slug))
+                {
+                    slug = model.Title.Replace(" ", "-").ToLower();
+                }
+                else
+                {
+                    slug = model.Slug.Replace(" ", "-").ToLower();
+                }
+                if (context.Pages.Any(p => p.Title == model.Title) || context.Pages.Any(p => p.Slug == slug))
+                {
+                    ModelState.AddModelError(" ", "That title or slug already exists.");
+                    return View(model);
+                }
+                dto.Slug = slug;
+                dto.Body = model.Body;
+                dto.HasSidebar = model.HasSidebar;
+                dto.Sorting = 100;
+                context.Pages.Add(dto);
+                context.SaveChanges();
             }
-                return RedirectToAction("Index");
+            TempData["SM"] = "You have added a new Page!";
+                return RedirectToAction("AddPage");
         }
     }
 }
