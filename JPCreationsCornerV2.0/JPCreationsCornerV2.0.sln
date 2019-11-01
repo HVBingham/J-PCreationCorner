@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JPCreationsCornerV2.0", "JPCreationsCornerV2.0\JPCreationsCornerV2.0.csproj", "{94C24084-D4A1-4971-810E-10C29C5366BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94C24084-D4A1-4971-810E-10C29C5366BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94C24084-D4A1-4971-810E-10C29C5366BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94C24084-D4A1-4971-810E-10C29C5366BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94C24084-D4A1-4971-810E-10C29C5366BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F7B4F2BC-688A-48E0-BE04-FF6B14DC1A95}
+	EndGlobalSection
+EndGlobal
