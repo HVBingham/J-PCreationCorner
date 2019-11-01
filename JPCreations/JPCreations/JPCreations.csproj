@@ -267,18 +267,19 @@
       <DependentUpon>201910311601224_updatetomodels2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\APIKey.cs" />
+    <Compile Include="ViewModels\AccountViewModels.cs" />
+    <Compile Include="Class\APIKey.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="ViewModels\CartViewModel.cs" />
+    <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\Moderator.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\ProductsViewModel.cs" />
-    <Compile Include="Models\RoleName.cs" />
+    <Compile Include="ViewModels\ProductsViewModel.cs" />
+    <Compile Include="Class\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -360,6 +361,7 @@
     <Content Include="Views\Cart\Buy.cshtml" />
     <Content Include="Views\Products\IndexUser.cshtml" />
     <Content Include="Views\Products\DetailsUser.cshtml" />
+    <Content Include="Views\Cart\CartPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

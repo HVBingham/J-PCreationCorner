@@ -3,11 +3,51 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using JPCreations.Models;
+using JPCreations.ViewModels;
 
 namespace JPCreations.Controllers
 {
     public class CartController : Controller
     {
+        public ActionResult Index()
+        {
+            var cart = Session["cart"] as List<CartViewModel> ?? new List<CartViewModel>();
+            if(cart.Count==0|| Session["cart"] == null)
+            {
+                ViewBag.Message = "Your cart is empty.";
+                return View();
+            }
+            decimal total = 0m;
+            foreach(var item in cart)
+            {
+                total += item.Total;
+
+            }
+            ViewBag.GrandTotal = total;
+            return View();
+        }
+        public ActionResult CartPartial()
+        {
+            CartViewModel model = new CartViewModel();
+            int qty = 0;
+            decimal price = 0m;
+            if (Session["cart"] != null)
+            {
+                var list = (List<CartViewModel>)Session["cart"];
+                foreach(var item in list)
+                {
+                    qty += item.Quantity;
+                    price += item.Quantity*item.Price;
+                }
+            }
+            else
+            {
+                model.Quantity = 0;
+                model.Price = 0m;
+            }
+
+            return PartialView(model); ;
+        }
         //ApplicationDbContext context;
         //ProductsViewModel productsView;
         //Customer customer;

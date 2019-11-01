@@ -22,3 +22,7 @@ select,
 textarea {
     max-width: 280px;
 }
+.ajaxcart{
+    position:relative;
+    top: 5px;
+}

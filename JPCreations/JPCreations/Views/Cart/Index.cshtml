@@ -1,61 +1,80 @@
-﻿@model JPCreations.Models.Customer
+﻿@model IEnumerable<JPCreations.ViewModels.CartViewModel>
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Cart Details";
 }
 
-<h2>Shopping Cart</h2>
+<h2>Cart Details:</h2>
+@if (ViewBag.Message != null)
+{
+
+}
+else
+{
+
+
 <table class="table">
     <tr>
+      
         <th>
-            @Html.Label("Product Name:")
+            Name
         </th>
         <th>
-            @Html.Label("Category:")
+            Quantity
         </th>
         <th>
-            @Html.Label("Description:")
+             Price
         </th>
         <th>
-            @Html.Label("Price:")
+            Image
         </th>
         <th>
-            @Html.Label("Photo:")
+
         </th>
         <th>
-            @Html.Label("Quantity")
+           Total:
         </th>
         <th>
-            @Html.Label("Sub-total")
+
         </th>
     </tr>
-    @foreach(var item in Model.Items)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem=>item.Product.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem=>item.Product.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem=>item.Product.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modeItem=>item.Product.Price)
-            </td>
-            <td>
-                <img src="@Url.Content(item.Product.Image.ImagePath)" width="350" height="450" />
-            </td>
-            <td>
-               @Html.DisplayFor(modelItem => item.Quantity)
-            <td>
-                
-            </td>
 
-        </tr>
-    }
-   
-    
+@foreach (var item in Model)
+{
+<tr>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.ProductName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Quantity)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Price)
+    </td>
+    <td>
+        <img src="@Url.Content(item.Image)" />
+    </td>
+
+    <td>
+      <a href="#" class="incrproduct" data-id="@item.ProductId">+</a>
+      <a href="#" class="decrproduct" data-id="@item.ProductId">-</a>
+      <a href="#" class="removeproduct" data-id="@item.ProductId"> Remove</a>
+    </td>
+    <td>
+       $@Html.DisplayFor(modelItem=>item.Total)
+    </td>
+</tr>
+}
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>$@ViewBag.GrandTotal</td>
+    </tr>
+
 </table>
-
-
+}
