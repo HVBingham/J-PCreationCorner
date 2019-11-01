@@ -328,3 +328,6 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+AppData*
+/JPCreationsCornerV2.0/JPCreationsCornerV2.0/App_Data
