@@ -24,7 +24,7 @@ namespace JPCreations.Controllers
 
             }
             ViewBag.GrandTotal = total;
-            return View();
+            return View(cart);
         }
         public ActionResult CartPartial()
         {
