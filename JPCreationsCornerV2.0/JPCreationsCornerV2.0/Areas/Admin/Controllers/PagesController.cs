@@ -145,6 +145,22 @@ namespace JPCreationsCornerV2._0.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
-        
+        [HttpPost]
+        public void ReorderPages(int[] id)
+        {
+            using(Context context = new Context())
+            {
+                int count = 1;
+                PageDTO dto;
+                foreach(var pageId in id)
+                {
+                    dto = context.Pages.Find(pageId);
+                    dto.Sorting = count;
+                    context.SaveChanges();
+                    count++;
+                }
+            }
+            
+        }
     }
 }
