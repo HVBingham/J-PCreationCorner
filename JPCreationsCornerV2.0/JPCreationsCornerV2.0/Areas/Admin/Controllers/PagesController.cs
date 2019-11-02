@@ -115,5 +115,50 @@ namespace JPCreationsCornerV2._0.Areas.Admin.Controllers
           
             return RedirectToAction("EditPage");
         }
+        public ActionResult PageDetails(int id)
+        {
+            PageViewModel model;
+            using(Context context = new Context())
+            {
+                PageDTO dto = context.Pages.Find(id);
+               if(dto==null)
+               {
+                    return Content("The Page does not exist.");
+               }
+                model = new PageViewModel(dto);
+            }
+            return View(model);
+        }
+        [HttpGet]
+        public ActionResult DeletePage(int id)
+        {
+            PageViewModel model;
+            using(Context context = new Context())
+            {
+                PageDTO dto = context.Pages.Find(id);
+                if (dto == null)
+                {
+                    return Content("The Page does not exist.");
+                }
+                model = new PageViewModel();
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult DeletePage(PageViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            using(Context context = new Context())
+            {
+                int id = model.Id;
+                string slug;
+                PageDTO dto = context.Pages.Find(id);
+                dto.Title = model.Title;
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

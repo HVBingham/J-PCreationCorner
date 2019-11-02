@@ -44,10 +44,21 @@ else
             <td>
                 @Html.ActionLink("Edit", "EditPage", new { id = item.Id }) |
                 @Html.ActionLink("Details", "PageDetails", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "DeletePage", new { id = item.Id })
+                @if (item.Slug != "home")
+                {
+                    @Html.ActionLink("Delete", "DeletePage", new { id = item.Id }, new { @class = "Delete" })
+                }
             </td>
         </tr>
     }
-
     </table>
 }
+@section Scripts
+    {
+    <script>
+        $(function () {
+            $("a.delete").click(function () { if (!confirm("Confrim Page Deletion.")) return false; });
+        });
+    </script>
+
+    }
