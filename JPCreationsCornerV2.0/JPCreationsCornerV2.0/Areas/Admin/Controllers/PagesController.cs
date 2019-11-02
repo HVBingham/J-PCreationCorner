@@ -132,7 +132,7 @@ namespace JPCreationsCornerV2._0.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult DeletePage(int id)
         {
-            PageViewModel model;
+            
             using(Context context = new Context())
             {
                 PageDTO dto = context.Pages.Find(id);
@@ -140,25 +140,11 @@ namespace JPCreationsCornerV2._0.Areas.Admin.Controllers
                 {
                     return Content("The Page does not exist.");
                 }
-                model = new PageViewModel();
-            }
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult DeletePage(PageViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-            using(Context context = new Context())
-            {
-                int id = model.Id;
-                string slug;
-                PageDTO dto = context.Pages.Find(id);
-                dto.Title = model.Title;
+                context.Pages.Remove(dto);
+                context.SaveChanges();
             }
             return RedirectToAction("Index");
         }
+        
     }
 }
