@@ -160,7 +160,29 @@ namespace JPCreationsCornerV2._0.Areas.Admin.Controllers
                     count++;
                 }
             }
-            
+        }
+        [HttpGet]
+        public ActionResult EditSidebar()
+        {
+            SideBarViewModel model;
+            using (Context context = new Context())
+            {
+                SidebarDTO dto = context.Sidebars.Find(1);
+                model = new SideBarViewModel(dto);
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult EditSidebar(SideBarViewModel model)
+        {
+            using (Context context = new Context())
+            {
+                SidebarDTO dto = context.Sidebars.Find(1);
+                dto.Body = model.Body;
+                context.SaveChanges();
+            }
+            TempData["SM"] = "Edit Complete!";
+            return RedirectToAction("EditSidebar");
         }
     }
 }
