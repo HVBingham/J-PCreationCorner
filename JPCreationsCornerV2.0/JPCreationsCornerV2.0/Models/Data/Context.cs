@@ -10,6 +10,7 @@ namespace JPCreationsCornerV2._0.Models.Data
     {
         public DbSet<PageDTO> Pages { get; set; }
         public DbSet<SidebarDTO> Sidebars { get; set; }
+        public DbSet<CategoryDTO> Categories { get; set; }
     }
 
 }

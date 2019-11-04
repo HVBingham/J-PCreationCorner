@@ -4,3 +4,10 @@
 .ui-state-hightlight{
     border: 1px dashed #ccc;
 }
+div.new-cat{
+    margin-top 30px;
+    position:relative;
+}
+span.ajax-text{
+    display:none;
+}
