@@ -125,57 +125,18 @@ namespace JPCreations.Controllers
                 return View();
             }
         }
-        //public ActionResult Email(int id)
-        //{
-        //    Customer customer = context.Customers.Include(c=>c.ApplicationUser).Where(c=>c.Id==id).SingleOrDefault();
-        //    return View(customer);
-        //}
-        //[HttpPost]
-        //public ActionResult Email(Customer customer, string subject, string message)
-        //{
-        //    var user = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == customer.Id).SingleOrDefault();
-        //    var userEmail = user.ApplicationUser.Email;
-        //   
-        //    var senderEmail = new MailAddress(userEmail);
-        //    var receiverEmail = new MailAddress(ModeratorEmails[1]);
-
-        //    var password = "AbcPassword1!";
-        //    var sub = subject;
-        //    var body = message;
-        //    var smtp = new SmtpClient()
-        //    {
-        //        Host = "smtp.gmail.com",
-        //        Port = 587,
-        //        EnableSsl = true,
-        //        DeliveryMethod = SmtpDeliveryMethod.Network,
-        //        UseDefaultCredentials = false,
-        //        Credentials = new NetworkCredential(senderEmail.Address, password)
-        //    };
-        //    using (var mess = new MailMessage(senderEmail, receiverEmail)
-        //    {
-        //        Subject = subject,
-        //        Body = body
-        //    })
-        //    {
-        //        smtp.Send(mess);
-        //    }
-        //        var Id = customer.Id;
-        //    return RedirectToAction("Index", "Customers", new { id=Id});
-        //}
-       
         public ActionResult Email(int id)
         {
-
-            return View(id);
+            Customer customer = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == id).SingleOrDefault();
+            return View(customer);
         }
         [HttpPost]
-        public async Task Email(int id, string subject, string message)
+        public ActionResult Email(Customer customer, string subject, string message, string Password)
         {
-            APIKey apiKey = new APIKey();
-            var key = apiKey.ApiKey;
-            var user = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == id).SingleOrDefault();
-            var name = user.FirstName + " "+ user.LastName;
+            var user = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == customer.Id).SingleOrDefault();
             var userEmail = user.ApplicationUser.Email;
+
+            var senderEmail = new MailAddress(userEmail);
             var moderatorList = context.Moderators.Include(m => m.ApplicationUser).ToList();
             List<string> ModeratorEmails = new List<string>();
             for (int i = 0; i < moderatorList.Count; i++)
@@ -183,17 +144,64 @@ namespace JPCreations.Controllers
                 var ModEmails = moderatorList[i].ApplicationUser.Email.ToString();
                 ModeratorEmails.Add(ModEmails);
             }
-            var client = new SendGridClient(key);
-            var from = new EmailAddress(userEmail, name);
-            var sub = subject ;
-            var to = new EmailAddress(ModeratorEmails[1]);
-            var plainTextContent = message;
-            var htmlContent = message;
-            var msg = MailHelper.CreateSingleEmail(from, to, sub, plainTextContent, htmlContent);
-            var response = await client.SendEmailAsync(msg);
-          
-            
+            var receiverEmail = new MailAddress(ModeratorEmails[1]);
+
+            ////var password = "AbcPassword1!";
+            var password = Password;
+            var sub = subject;
+            var body = message;
+            var smtp = new SmtpClient()
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(senderEmail.Address, password)
+            };
+            using (var mess = new MailMessage(senderEmail, receiverEmail)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(mess);
+            }
+            var Id = customer.Id;
+            return RedirectToAction("Index", "Customers", new { id = Id });
         }
-        
+
+        //public ActionResult Email(int id)
+        //{
+
+        //    return View(id);
+        //}
+        //[HttpPost]
+        //public async Task Email(int id, string subject, string message)
+        //{
+        //    APIKey apiKey = new APIKey();
+        //    var key = apiKey.ApiKey;
+        //    var user = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == id).SingleOrDefault();
+        //    var name = user.FirstName + " "+ user.LastName;
+        //    var userEmail = user.ApplicationUser.Email;
+        //    var moderatorList = context.Moderators.Include(m => m.ApplicationUser).ToList();
+        //    List<string> ModeratorEmails = new List<string>();
+        //    for (int i = 0; i < moderatorList.Count; i++)
+        //    {
+        //        var ModEmails = moderatorList[i].ApplicationUser.Email.ToString();
+        //        ModeratorEmails.Add(ModEmails);
+        //    }
+        //    var client = new SendGridClient(key);
+        //    var from = new EmailAddress(userEmail, name);
+        //    var sub = subject ;
+        //    var to = new EmailAddress(ModeratorEmails[1]);
+        //    var plainTextContent = message;
+        //    var htmlContent = message;
+        //    var msg = MailHelper.CreateSingleEmail(from, to, sub, plainTextContent, htmlContent);
+        //    var response = await client.SendEmailAsync(msg);
+
+
+        //}
+
     }
 }

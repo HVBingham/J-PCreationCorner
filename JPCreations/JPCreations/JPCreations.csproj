@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201910311601224_updatetomodels2.Designer.cs">
       <DependentUpon>201910311601224_updatetomodels2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911041348254_addtionofItem.cs" />
+    <Compile Include="Migrations\201911041348254_addtionofItem.Designer.cs">
+      <DependentUpon>201911041348254_addtionofItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Class\APIKey.cs" />
@@ -419,6 +423,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910311601224_updatetomodels2.resx">
       <DependentUpon>201910311601224_updatetomodels2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911041348254_addtionofItem.resx">
+      <DependentUpon>201911041348254_addtionofItem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

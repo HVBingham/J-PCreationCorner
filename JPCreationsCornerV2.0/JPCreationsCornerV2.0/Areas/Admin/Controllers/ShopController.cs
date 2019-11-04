@@ -20,5 +20,40 @@ namespace JPCreationsCornerV2._0.Areas.Admin.Controllers
             }
             return View(categoryViewModelList);
         }
+      
+        [HttpPost]
+        public ActionResult AddNewCategory(string caName )
+        {
+            //if (ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
+            //using(Context context = new Context())
+            //{
+            //    string slug;
+            //    CategoryDTO dto = new CategoryDTO();
+            //    dto.Name = model.Name;
+            //    if (string.IsNullOrWhiteSpace(model.Slug))
+            //    {
+            //        slug = model.Name.Replace("", "-").ToLower();
+            //    }
+            //    else
+            //    {
+            //        slug = model.Slug.Replace("", "-").ToLower();
+            //    }
+            //    if(context.Categories.Any(c=>c.Name==model.Name)|| context.Categories.Any(c => c.Slug == model.Slug))
+            //    {
+            //        ModelState.AddModelError("", "That title or slug already exists.");
+            //        return View(model);
+            //    }
+            //    dto.Slug = slug;
+            //    dto.Sorting = 100;
+            //    context.Categories.Add(dto);
+            //    context.SaveChanges();
+            //}
+            //TempData["SM"] = "You have added a new category!";
+            return RedirectToAction("AddNewCategory");
+        }
     }
+
 }

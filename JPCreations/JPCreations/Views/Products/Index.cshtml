@@ -1,4 +1,4 @@
-﻿@using JPCreations.Models;
+﻿@model IEnumerable<JPCreations.Models.Product>
 
 @{
     ViewBag.Title = "Index";
@@ -8,56 +8,73 @@
 
 <p>
     @Html.ActionLink("Create New", "Create", "Products")|
-    @Html.ActionLink("Deactivated Products", "Deactivated","Products")
+    @Html.ActionLink("Deactivated Products", "Deactivated", "Products")|
+    @Html.ActionLink("Upload Images", "Add", "Images")
 </p>
 <table class="table">
+
     <tr>
+
+
         <th>
-            @Html.Label("Product Name")
+            @Html.DisplayNameFor(model => model.ProductName)
         </th>
+
         <th>
-            @Html.Label("Category")
+            @Html.DisplayNameFor(model => model.Category)
         </th>
+
         <th>
-            @Html.Label("Description")
+            @Html.DisplayNameFor(model => model.Description)
         </th>
+
         <th>
-            @Html.Label("Price")
+            @Html.DisplayNameFor(model => model.Price)
         </th>
+
         <th>
-            @Html.Label("Photo")
+            @Html.DisplayNameFor(model => model.Image.Title)
         </th>
-        <th>
-            @Html.Label("Quantity")
-        </th>
+
     </tr>
 
-@foreach (Product product in ViewBag.Products) {
-    <tr>
-        <td>
-            @product.ProductName
-        </td>
-        <td>
-            @product.Category
-        </td>
-        <td>
-            @product.Description
-        </td>
-        <td>
-            @product.Price
-        </td>
-        <td>
-            @product.Image.Title
-        </td>
-        <td>
-            @product.Quantity
-        </td>
-        
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=product.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=product.Id })
-        </td>
-    </tr>
-}
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Image.Title)
+            </td>
+
+
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
+            </td>
+        </tr>
+
+    }
 
 </table>
+<div>
+    @Html.ActionLink("Back to Customers", "Index", "Moderators")
+</div>

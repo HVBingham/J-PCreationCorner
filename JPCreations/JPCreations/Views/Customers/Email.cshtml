@@ -1,7 +1,8 @@
-﻿
+﻿@model JPCreations.Models.Customer
 @{
     ViewBag.Title = "Email";
 }
+@Html.HiddenFor(model=>model.Id)
 @using (Html.BeginForm())
 {
     
@@ -14,6 +15,11 @@
     <form method="post" action="Email">
         <div class="container">
             <br />
+            <p>
+                By typing in your password in the area below you are allowing us to access your email to send an email to our crafters.
+            </p>
+            <span class="form-control-static">Your Email Passord:</span><input class="form-control" type="text" name="Password"/>
+            <br/>
             <span class="form-control-static">Subject:</span><input class="form-control" type="text" name="subject" />
             <br />
             <span class="form-control-static">Message:</span><input class="form-control" type="text" name="message" />
@@ -21,7 +27,10 @@
             <input type="submit" class="btn btn-primary"  value="Send"/>
         </div>
     </form>
-    
+   
 }
+<div>
+   | @Html.ActionLink("Back to Products", "Index", "Customers", new { id=Model.Id})|
+</div>
 
 
