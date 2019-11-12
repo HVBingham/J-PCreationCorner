@@ -61,6 +61,9 @@ else
             $("a.delete").click(function () {
                 if (!confirm("Confrim Page Deletion.")) return false;
             });
+
+
+
             $("table#pages tbody").sortable({
                 items: "tr:not(.home)",
                 placeholder: "ui-state-highlight",
