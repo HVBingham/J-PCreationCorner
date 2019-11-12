@@ -7,6 +7,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using JPCreationsCornerV2._0.Models.Data;
 using JPCreationsCornerV2._0.Models.ViewModels.Shop;
+using PagedList;
 
 namespace JPCreationsCornerV2._0.Areas.Admin.Controllers
 {
@@ -189,6 +190,44 @@ namespace JPCreationsCornerV2._0.Areas.Admin.Controllers
             #endregion
             return RedirectToAction("AddProduct");
         }
+        public ActionResult Products(int? page, int? catId)
+        {
+            List<ProductViewModel> listOfProductViewModel;
+            var pageNumber = page ?? 1;
+            using (Context context = new Context())
+            {
+                listOfProductViewModel = context.Products.ToArray()
+                    .Where(x => catId == null || catId == 0 || x.CategoryId == catId)
+                    .Select(x => new ProductViewModel(x))
+                    .ToList();
+                ViewBag.Categories = new SelectList(context.Categories.ToList(), "Id", "Name");
+                ViewBag.SelectedCat = catId.ToString();
+            }
+            var onePageofProducts = listOfProductViewModel.ToPagedList(pageNumber, 3);
+            ViewBag.OnePageOfProducts = onePageofProducts;
+            return View(listOfProductViewModel);
+        }
+        [HttpGet]
+        public ActionResult EditProduct(int id)
+        {
+            ProductViewModel model;
+            using(Context context = new Context())
+            {
+                ProductDTO dto = context.Products.Find(id);
+                if(dto== null)
+                {
+                    return Content("That product does not exist.");
+                }
+                model = new ProductViewModel(dto);
+                model.Categories = new SelectList(context.Categories.ToList(), "Id", "Name");
+                model.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id + "/Gallery/Thumbs"))
+                    .Select(f=>Path.GetFileName(f));
+            }
+            return View(model);
+        }
+      
     }
+    
+
 
 }
