@@ -104,15 +104,15 @@ namespace JPCreationsCornerV2._0.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult AddProduct(ProductViewModel model, HttpPostedFileBase file)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    using(Context contex = new Context())
-            //    {
-            //        model.Categories = new SelectList(contex.Categories.ToList(), "Id", "Name");
-            //        return View(model);
-            //    }
-            //}
-            using(Context context =new Context())
+            if (!ModelState.IsValid)
+            {
+                using (Context contex = new Context())
+                {
+                    model.Categories = new SelectList(contex.Categories.ToList(), "Id", "Name");
+                    return View(model);
+                }
+            }
+            using (Context context =new Context())
             {
                 if (context.Products.Any(p => p.Name == model.Name))
                 {
@@ -225,7 +225,122 @@ namespace JPCreationsCornerV2._0.Areas.Admin.Controllers
             }
             return View(model);
         }
-      
+        [HttpPost]
+        public ActionResult EditProduct(ProductViewModel model, HttpPostedFileBase file)
+        {
+            int id = model.Id;
+            using(Context context = new Context())
+            {
+                model.Categories = new SelectList(context.Categories.ToList(), "Id", "Name");
+            }
+            model.GalleryImages = Directory.EnumerateFiles(Server.MapPath("~/Images/Uploads/Products/" + id +"/Gallery/Thumbs"))
+                .Select(fn => Path.GetFileName(fn));
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            using(Context context1 = new Context())
+            {
+                if (context1.Products.Where(p => p.Id!= id).Any(p=>p.Name == model.Name))
+                {
+                    ModelState.AddModelError(" ", "That product name is taken.");
+                    return View(model);
+                }
+            }
+            using(Context context2 = new Context())
+            {
+                ProductDTO dto = context2.Products.Find(id);
+                dto.Name = model.Name;
+                dto.Slug = model.Name.Replace(" ", "-").ToLower();
+                dto.Price = model.Price;
+                dto.Description = model.Description;
+                dto.CategoryId = model.CategoryId;
+                dto.ImageName = model.ImageName;
+                CategoryDTO categoryDTO = context2.Categories.FirstOrDefault(c => c.Id == model.CategoryId);
+                dto.CategoryName = categoryDTO.Name;
+                context2.SaveChanges();
+            }
+            TempData["SM"] = "You have edited the product!";
+            #region Image Upload
+            if(file != null && file.ContentLength > 0)
+            {
+                string ext = file.ContentType.ToLower();
+                if(ext != "image/jpg"&&
+                    ext != "image/jpeg" &&
+                    ext != "image/pjpeg"&&
+                    ext != "image/gif"&&
+                    ext != "image/x-png"&&
+                    ext!= "image/png")
+                {
+                    using(Context context = new Context())
+                    { 
+                        ModelState.AddModelError(" ", "The image was not uploaded - wrong image extention.");
+                        return View(model);
+                    }
+                }
+                var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
+                var pathString1 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
+                var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Thumbs");
+                DirectoryInfo di1 = new DirectoryInfo(pathString1);
+                DirectoryInfo di2 = new DirectoryInfo(pathString2);
+                foreach (FileInfo file2 in di1.GetFiles())
+                    file2.Delete();
+                foreach (FileInfo file3 in di2.GetFiles())
+                    file3.Delete();
+                string imageName = file.FileName;
+                using(Context context1 = new Context())
+                {
+                    ProductDTO dto = context1.Products.Find(id);
+                    dto.ImageName = imageName;
+                    context1.SaveChanges();
+                }
+                var path = string.Format("{0}\\{1}", pathString1, imageName);
+                var path2 = string.Format("{0}\\{1}", pathString2, imageName);
+                file.SaveAs(path);
+                WebImage img = new WebImage(file.InputStream);
+                img.Resize(200, 200);
+                img.Save(path2);
+
+            }
+            #endregion
+
+            return RedirectToAction("EditProduct");
+        }
+        public ActionResult DeleteProduct(int id)
+        {
+            using(Context context = new Context())
+            {
+                ProductDTO dto = context.Products.Find(id);
+                context.Products.Remove(dto);
+                context.SaveChanges();
+            }
+            var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
+            string pathString = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
+            if (Directory.Exists(pathString))
+                Directory.Delete(pathString, true);
+            return RedirectToAction("Products");
+        }
+        [HttpPost]
+        public void SaveGalleryImages(int  id)
+        {
+            foreach(string fileName in Request.Files)
+            {
+                HttpPostedFileBase file = Request.Files[fileName];
+                if (file != null && file.ContentLength > 0)
+                {
+                    var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
+                    string pathString1 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery");
+                    string pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery\\Thumbs");
+                    var path = string.Format("{0}\\{1}", pathString1, file.FileName);
+                    var path2 = string.Format("{0}\\{1}", pathString2, file.FileName);
+                    file.SaveAs(path);
+                    WebImage img = new WebImage(file.InputStream);
+                    img.Resize(200, 200);
+                    img.Save(path2);
+                }
+            }
+            
+        }
     }
     
 

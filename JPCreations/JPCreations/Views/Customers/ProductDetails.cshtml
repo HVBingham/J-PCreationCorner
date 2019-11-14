@@ -67,7 +67,9 @@
             <img src="@Url.Content(Model.products[0].Image.ImagePath)" width="200" , height="250" />
         </dd>
         <dd>
-            <a href="@Url.Action( "Buy", "Cart", new {id=Model.products[0].Id, custId=Model.Customer.Id})"> Add to cart!</a>
+           <div class="addtocart">
+               <a href="#" class="addtocart">Add to cart!</a>
+          </div>
         </dd>
     </dl>
     
@@ -78,4 +80,14 @@
  </p>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $("a.addtocart").click(function (e) {
+                e.preventDefault();
+                var url = "/cart/AddToCartPartial"
+                $.get(url, { id:@Model.products[0].Id});
+                location.reload();
+            });
+        });
+    </script>
     }
