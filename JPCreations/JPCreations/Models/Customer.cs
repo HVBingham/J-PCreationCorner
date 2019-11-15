@@ -31,8 +31,6 @@ namespace JPCreations.Models
         [ForeignKey("ApplicationUser")]
         public string ApplicationId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-        [Display(Name ="Orders")]
-        public ICollection<Order> Orders { get; set; }
 
         
         

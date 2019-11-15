@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using System.Net.Mail;
 using System.Net;
+using JPCreations.Models.ViewModels;
+using JPCreations.ViewModels.OrderDTO;
 
 namespace JPCreations.Controllers
 {
@@ -127,6 +129,30 @@ namespace JPCreations.Controllers
 
 
             
+        }
+        public ActionResult Orders()
+        {
+            List<OrderViewModel> orders = context.Orders.Include(o => o.Customer).ToArray().Select(x => new OrderViewModel(x)).ToList();
+            foreach(var order in orders)
+            {
+                Dictionary<string, int> productsandQty = new Dictionary<string, int>();
+                double total = 0;
+                List<OrderDetailsDTO> orderDetailsList = context.OrderDetails.Include(o => o.Customer).Include(o => o.OrderDTO).Include(o => o.Product).Where(x => x.OrderId == order.OrderId).ToList();
+                Customer customer = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == order.CustomerId).FirstOrDefault();
+                string name = customer.FirstName + " " + customer.LastName;
+                foreach(var orderdetials in orderDetailsList)
+                {
+                    Product product = context.Products.Include(p => p.Image).Where(p => p.Id == orderdetials.ProductId).FirstOrDefault();
+                    double price = product.Price;
+                    string productName = product.ProductName;
+                    productsandQty.Add(productName, orderdetials.Quantity);
+                    total += orderdetials.Quantity * price;
+                }
+                order.Name = name;
+                order.ProductsAndQty = productsandQty;
+                order.Total = total;
+            }
+            return View(orders);
         }
     
     }

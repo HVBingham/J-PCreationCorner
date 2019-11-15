@@ -20,7 +20,6 @@ namespace JPCreations.Models
         [Display(Name ="Currently An Active item?")]
         public bool IsActive { get; set; }
         public int Quantity { get; set; }
-        public int PurchaseQuantity { get; set; }
         [ForeignKey("Image")]
         [Display(Name ="Product Image")]
         public int? ImageId { get; set; }

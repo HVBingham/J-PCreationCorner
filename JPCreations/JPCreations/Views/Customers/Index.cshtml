@@ -5,6 +5,7 @@
 }
 
 <h2>Index</h2>
+@Html.ActionLink("View Past Oders", "Orders", new {id= Model.Customer.Id} )
 @Html.HiddenFor(model => model.Customer.Id)
 @Html.HiddenFor(model => model.Customer.FirstName)
 @Html.HiddenFor(model => model.Customer.LastName)

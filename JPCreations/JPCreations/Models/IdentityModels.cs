@@ -1,6 +1,8 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using JPCreations.ViewModels.OrderDTO;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -25,11 +27,13 @@ namespace JPCreations.Models
         public DbSet<Moderator> Moderators { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Image> Images { get; set; }
-        public DbSet<Item> Items { get; set; }
+        public DbSet<OrderDTO> Orders { get; set; }
+        public DbSet<OrderDetailsDTO> OrderDetails { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+       
 
         public static ApplicationDbContext Create()
         {

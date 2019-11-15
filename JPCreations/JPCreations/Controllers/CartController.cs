@@ -1,9 +1,14 @@
-﻿using System.Collections.Generic;
+﻿
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web.Mvc;
 using JPCreations.Models;
 using JPCreations.ViewModels;
+using JPCreations.ViewModels.OrderDTO;
 
 namespace JPCreations.Controllers
 {
@@ -122,5 +127,43 @@ namespace JPCreations.Controllers
             CartViewModel model = cart.FirstOrDefault(x => x.ProductId == productId);
             cart.Remove(model);
         }
+        public ActionResult PayPalPartial()
+        {
+            List<CartViewModel> cart = Session["cart"] as List<CartViewModel>;
+
+            return PartialView(cart);
+        }
+        [HttpPost]
+        public void PlaceOrder()
+        {
+            List<CartViewModel> cart = Session["cart"] as List<CartViewModel>;
+            string userName = User.Identity.Name;
+            OrderDTO orderDTO = new OrderDTO();
+            var q = context.Customers.Include(c => c.ApplicationUser).Where(c => c.ApplicationUser.UserName == userName).FirstOrDefault();
+            int userId = q.Id;
+            orderDTO.CustomerId = userId;
+            orderDTO.OrderDate = DateTime.Now;
+            context.Orders.Add(orderDTO);
+            context.SaveChanges();
+            int orderId = orderDTO.OrderId;
+            OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
+            foreach(var item in cart)
+            {
+                orderDetailsDTO.OrderId = orderId;
+                orderDetailsDTO.CustomerId = userId;
+                orderDetailsDTO.ProductId = item.ProductId;
+                orderDetailsDTO.Quantity = item.Quantity;
+                context.OrderDetails.Add(orderDetailsDTO);
+                context.SaveChanges();
+            }
+            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            {
+                Credentials = new NetworkCredential("c359eb46e9aee9", "b3a2c86d91f552"),
+                EnableSsl = true
+            };
+            client.Send("admin@example.com", "admin@example.com", "New order", "You have a new order!" +orderId);
+            Session["cart"] = null;
+        }
     }
+
 }
