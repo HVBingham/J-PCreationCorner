@@ -1,0 +1,17 @@
+﻿
+
+@{
+    ViewBag.Title = "Discount Email";
+}
+
+<h2>ShippedEmail</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Confirm Discount Email" class="btn btn-default" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}

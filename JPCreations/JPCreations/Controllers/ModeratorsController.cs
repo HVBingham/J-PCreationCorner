@@ -101,8 +101,8 @@ namespace JPCreations.Controllers
                 var ModEmails = moderatorList[i].ApplicationUser.Email.ToString();
                 ModeratorEmails.Add(ModEmails);
             }
-            var senderEmail = new MailAddress(userEmail);
-            var receiverEmail = new MailAddress(ModeratorEmails[1]);
+            var senderEmail = new MailAddress("sampleModerators2019k@gmail.com");
+            var receiverEmail = new MailAddress("SampleCustomers2019k@gmail.com");
 
             var password = "AbcPassword1!";
             var sub = "Your Package Has Shipped";
@@ -126,10 +126,8 @@ namespace JPCreations.Controllers
             }
             var Id = customer.Id;
             return View();
-
-
-            
         }
+
         public ActionResult Orders()
         {
             List<OrderViewModel> orders = context.Orders.Include(o => o.Customer).ToArray().Select(x => new OrderViewModel(x)).ToList();
@@ -153,6 +151,34 @@ namespace JPCreations.Controllers
                 order.Total = total;
             }
             return View(orders);
+        }
+        public ActionResult DiscountEmail()
+        {
+            var senderEmail = new MailAddress("sampleModerators2019k@gmail.com");
+            var receiverEmail = new MailAddress("SampleCustomers2019k@gmail.com");
+
+            var password = "AbcPassword1!";
+            var sub = "You are due for a discount!";
+            var body = "You qualify for a discount on one personalized custom item. Email Jen at SampleModerators2019k@gmail.com to get your item started!";
+            var smtp = new SmtpClient()
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(senderEmail.Address, password)
+            };
+            using (var mess = new MailMessage(senderEmail, receiverEmail)
+            {
+                Subject = sub,
+                Body = body
+            })
+            {
+                smtp.Send(mess);
+            }
+         
+            return View();
         }
     
     }

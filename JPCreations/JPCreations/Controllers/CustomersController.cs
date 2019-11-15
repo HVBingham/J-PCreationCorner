@@ -21,26 +21,26 @@ namespace JPCreations.Controllers
         public CustomersController()
         {
             context = new ApplicationDbContext();
-            
+
         }
         public ActionResult Index(int id)
         {
-            List<Product> productsList = context.Products.Include(p=>p.Image).Where(p=>p.IsActive==true & p.Quantity>=1).ToList();
+            List<Product> productsList = context.Products.Include(p => p.Image).Where(p => p.IsActive == true & p.Quantity >= 1).ToList();
             Customer customer = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == id).SingleOrDefault();
             ProductsViewModel productsView = new ProductsViewModel();
             productsView.Customer = customer;
-            for(int i =0; i<productsList.Count; i++)
+            for (int i = 0; i < productsList.Count; i++)
             {
                 productsView.products.Add(productsList[i]);
             }
-            
+
             return View(productsView);
         }
-        public ActionResult ProductDetails(int id,int custId)
+        public ActionResult ProductDetails(int id, int custId)
         {
             ProductsViewModel productsView = new ProductsViewModel();
             productsView.products = new List<Product>();
-            productsView.Customer = context.Customers.Include(c=>c.ApplicationUser).Where(c => c.Id == custId).SingleOrDefault();
+            productsView.Customer = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == custId).SingleOrDefault();
             Product product = context.Products.Include(p => p.Image).Where(p => p.Id == id).SingleOrDefault();
             productsView.products.Add(product);
 
@@ -49,11 +49,11 @@ namespace JPCreations.Controllers
         [HttpPost]
         public ActionResult ProductDetails()
         {
-            
-            
+
+
             return View();
         }
-      
+
         public ActionResult Details(int id)
         {
             Customer detailsOfCustomer = context.Customers.Find(id);
@@ -146,7 +146,7 @@ namespace JPCreations.Controllers
                 var ModEmails = moderatorList[i].ApplicationUser.Email.ToString();
                 ModeratorEmails.Add(ModEmails);
             }
-            var receiverEmail = new MailAddress(ModeratorEmails[1]);
+            var receiverEmail = new MailAddress("SampleModerators2019k@gmail.com");
 
             ////var password = "AbcPassword1!";
             var password = Password;
@@ -229,5 +229,44 @@ namespace JPCreations.Controllers
             }
             return View(orders);
         }
+        public ActionResult SuggestedItems(int id)
+        {
+            SuggestedItemsViewModel itemsViewModel = new SuggestedItemsViewModel();
+            List<OrderViewModel> orders = context.Orders.Include(o => o.Customer).ToArray().Select(x => new OrderViewModel(x)).ToList();
+            foreach (var order in orders)
+            {
+                Dictionary<string, int> productsandQty = new Dictionary<string, int>();
+                double total = 0;
+                List<OrderDetailsDTO> orderDetailsList = context.OrderDetails.Include(o => o.Customer).Include(o => o.OrderDTO).Include(o => o.Product).Where(x => x.OrderId == order.OrderId).ToList();
+                Customer customer = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == id).FirstOrDefault();
+                string name = customer.FirstName + " " + customer.LastName;
+                foreach (var orderdetials in orderDetailsList)
+                {
+                    Product product = context.Products.Include(p => p.Image).Where(p => p.Id == orderdetials.ProductId).FirstOrDefault();
+                    double price = product.Price;
+                    string productName = product.ProductName;
+                    productsandQty.Add(productName, orderdetials.Quantity);
+                    total += orderdetials.Quantity * price;
+                }
+                order.Name = name;
+                order.ProductsAndQty = productsandQty;
+                order.Total = total;
+                Dictionary<string, int> Products2 = new Dictionary<string, int>();
+                foreach (var orderdetails in orderDetailsList)
+                {
+                    string productName = "";
+                    Product product1 = context.Products.Include(p => p.Image).Where(p => p.Category == orderdetails.Product.Category).FirstOrDefault();
+                    for (int i = 0; 1 < Products2.Count; i++)
+                    {
+                         productName = product1.ProductName +i;
+                    }
+                    Products2.Add(productName,product1.Quantity);
+                }
+               
+                itemsViewModel.products = Products2;
+            }
+            return View(itemsViewModel);
+        }
     }
 }
+

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<JPCreations.Models.ViewModels.SuggestedItemsViewModel>
+@{ 
+    ViewBag.Title = "Suggested Products ";
+}
+<h3> Suggested Products:</h3>
+<table class="table">
+    <tr>
+        <th>
+            Product Name:
+        </th>
+        <th>
+            Product Description:
+        </th>
+        <th>
+            Price:
+        </th>
+        <th>
+            Quanity:
+        </th>
+        <th>
+           Image:
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>   
+    @foreach (var item2 in item.products)
+    {
+       <td>@item2.Key</td>
+       <td>@item2.Value</td>
+    }
+    </tr>
+}
+
+</table>

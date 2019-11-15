@@ -9,7 +9,7 @@
 
 <table class="table">
     <tr>
-        <th>
+        <th> 
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th>
@@ -51,7 +51,8 @@
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Send Shippment Email", "ShippedEmail", new { id=item.Id})
+            @Html.ActionLink("Send Shippment Email", "ShippedEmail", new { id=item.Id})|
+            @Html.ActionLink("Send Custom Item Discount Email", "DiscountEmail")
         </td>
     </tr>
 
