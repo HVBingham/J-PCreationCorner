@@ -5,8 +5,9 @@
 }
 
 <h2>Index</h2>
-@Html.ActionLink("View Past Orders", "Orders", new {id= Model.Customer.Id} )|
-@Html.ActionLink("View Suggested Items","SuggestedItems", new { id=Model.Customer.Id})
+@Html.ActionLink("View Past Orders", "Orders", new { id = Model.Customer.Id })|
+@*@Html.ActionLink("View Suggested Items", "SuggestedItems", new { id = Model.Customer.Id })|*@
+@Html.ActionLink("View Cart", "Index", "Cart")
 @Html.HiddenFor(model => model.Customer.Id)
 @Html.HiddenFor(model => model.Customer.FirstName)
 @Html.HiddenFor(model => model.Customer.LastName)
@@ -43,13 +44,13 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelProduct=>product.ProductName)
+                @Html.DisplayFor(modelProduct => product.ProductName)
             </td>
             <td>
                 @Html.DisplayFor(modelProduct => product.Category)
             </td>
             <td>
-                @Html.DisplayFor(modelProduct=> product.Description)
+                @Html.DisplayFor(modelProduct => product.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelProduct => product.Price)

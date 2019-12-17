@@ -103,10 +103,10 @@ namespace JPCreations.Controllers
             }
             var senderEmail = new MailAddress("sampleModerators2019k@gmail.com");
             var receiverEmail = new MailAddress("SampleCustomers2019k@gmail.com");
-
+            var order = context.Orders.Where(o => o.CustomerId == user.Id).SingleOrDefault();
             var password = "AbcPassword1!";
             var sub = "Your Package Has Shipped";
-            var body = "Your Order for has Shipped.";
+            var body = "Your Order number " + order.OrderId + ". Placed on " + order.OrderDate + " has been shipped. Please log in to view your order details.";
             var smtp = new SmtpClient()
             {
                 Host = "smtp.gmail.com",
@@ -125,7 +125,7 @@ namespace JPCreations.Controllers
                 smtp.Send(mess);
             }
             var Id = customer.Id;
-            return View();
+            return RedirectToAction("Index", "Moderators");
         }
 
         public ActionResult Orders()

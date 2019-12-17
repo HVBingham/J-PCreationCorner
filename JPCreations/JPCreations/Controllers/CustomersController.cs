@@ -148,8 +148,7 @@ namespace JPCreations.Controllers
             }
             var receiverEmail = new MailAddress("SampleModerators2019k@gmail.com");
 
-            ////var password = "AbcPassword1!";
-            var password = Password;
+            var password = "AbcPassword1!";
             var sub = subject;
             var body = message;
             var smtp = new SmtpClient()
@@ -173,37 +172,6 @@ namespace JPCreations.Controllers
             return RedirectToAction("Index", "Customers", new { id = Id });
         }
 
-        //public ActionResult Email(int id)
-        //{
-
-        //    return View(id);
-        //}
-        //[HttpPost]
-        //public async Task Email(int id, string subject, string message)
-        //{
-        //    APIKey apiKey = new APIKey();
-        //    var key = apiKey.ApiKey;
-        //    var user = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == id).SingleOrDefault();
-        //    var name = user.FirstName + " "+ user.LastName;
-        //    var userEmail = user.ApplicationUser.Email;
-        //    var moderatorList = context.Moderators.Include(m => m.ApplicationUser).ToList();
-        //    List<string> ModeratorEmails = new List<string>();
-        //    for (int i = 0; i < moderatorList.Count; i++)
-        //    {
-        //        var ModEmails = moderatorList[i].ApplicationUser.Email.ToString();
-        //        ModeratorEmails.Add(ModEmails);
-        //    }
-        //    var client = new SendGridClient(key);
-        //    var from = new EmailAddress(userEmail, name);
-        //    var sub = subject ;
-        //    var to = new EmailAddress(ModeratorEmails[1]);
-        //    var plainTextContent = message;
-        //    var htmlContent = message;
-        //    var msg = MailHelper.CreateSingleEmail(from, to, sub, plainTextContent, htmlContent);
-        //    var response = await client.SendEmailAsync(msg);
-
-
-        //}
 
         public ActionResult Orders(int id)
         {
@@ -256,7 +224,7 @@ namespace JPCreations.Controllers
                 {
                     string productName = "";
                     Product product1 = context.Products.Include(p => p.Image).Where(p => p.Category == orderdetails.Product.Category).FirstOrDefault();
-                    for (int i = 0; 1 < Products2.Count; i++)
+                    for (int i = 0; i < Products2.Count; i++)
                     {
                          productName = product1.ProductName +i;
                     }

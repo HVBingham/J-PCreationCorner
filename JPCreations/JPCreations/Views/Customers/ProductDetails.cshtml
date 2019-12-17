@@ -4,19 +4,20 @@
     ViewBag.Title = "ProductDetails";
 }
 
+
 <h2>Product Details</h2>
 
 <div>
-    @Html.HiddenFor(model=>model.Customer.Id)
-    @Html.HiddenFor(model=>model.Customer.FirstName)
-    @Html.HiddenFor(model=>model.Customer.LastName)
-    @Html.HiddenFor(model=>model.Customer.ApplicationUser)
-    @Html.HiddenFor(model=>model.Customer.StreetAddress)
-    @Html.HiddenFor(model=>model.Customer.State)
-    @Html.HiddenFor(model=>model.Customer.City)
-    @Html.HiddenFor(model=>model.Customer.State)
-    @Html.HiddenFor(model=>model.Customer.ZipCode)
-    @Html.HiddenFor(model=>model.Customer.ApplicationId)
+    @Html.HiddenFor(model => model.Customer.Id)
+    @Html.HiddenFor(model => model.Customer.FirstName)
+    @Html.HiddenFor(model => model.Customer.LastName)
+    @Html.HiddenFor(model => model.Customer.ApplicationUser)
+    @Html.HiddenFor(model => model.Customer.StreetAddress)
+    @Html.HiddenFor(model => model.Customer.State)
+    @Html.HiddenFor(model => model.Customer.City)
+    @Html.HiddenFor(model => model.Customer.State)
+    @Html.HiddenFor(model => model.Customer.ZipCode)
+    @Html.HiddenFor(model => model.Customer.ApplicationId)
 
     <hr />
     <dl class="dl-horizontal">
@@ -67,19 +68,19 @@
             <img src="@Url.Content(Model.products[0].Image.ImagePath)" width="200" , height="250" />
         </dd>
         <dd>
-           <div class="addtocart">
-               <a href="#" class="addtocart">Add to cart!</a>
-          </div>
+            <div class="addtocart">
+                <a href="#" class="addtocart">Add to cart!</a>
+            </div>
         </dd>
     </dl>
-    
+
 </div>
- <p>
-        @Html.ActionLink("Back to List", "Index", new { id = Model.Customer.Id }, "Customers")|
-        @Html.ActionLink("Send Request for Custom Item", "Email", new { id = Model.Customer.Id }, "Customers")
- </p>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
+<p>
+    @Html.ActionLink("Back to List", "Index", new { id = Model.Customer.Id }, "Customers")|
+    @Html.ActionLink("Send Request for Custom Item", "Email", new { id = Model.Customer.Id }, "Customers")
+</p>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(function () {
             $("a.addtocart").click(function (e) {
@@ -90,4 +91,4 @@
             });
         });
     </script>
-    }
+}

@@ -23,7 +23,7 @@ namespace JPCreations
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/Theme.css",
+                      "~/Content/bootstrap2.css",
                       "~/Content/site.css"));
         }
     }

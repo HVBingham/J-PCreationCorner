@@ -156,13 +156,40 @@ namespace JPCreations.Controllers
                 context.OrderDetails.Add(orderDetailsDTO);
                 context.SaveChanges();
             }
-            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            Customer customer = context.Customers.Where(c => c.Id == userId).SingleOrDefault();
+            var user = context.Customers.Include(c => c.ApplicationUser).Where(c => c.Id == customer.Id).SingleOrDefault();
+            var userEmail = user.ApplicationUser.Email;
+
+            var senderEmail = new MailAddress(userEmail);
+            var moderatorList = context.Moderators.Include(m => m.ApplicationUser).ToList();
+            List<string> ModeratorEmails = new List<string>();
+            for (int i = 0; i < moderatorList.Count; i++)
             {
-                Credentials = new NetworkCredential("c359eb46e9aee9", "b3a2c86d91f552"),
-                EnableSsl = true
+                var ModEmails = moderatorList[i].ApplicationUser.Email.ToString();
+                ModeratorEmails.Add(ModEmails);
+            }
+            var receiverEmail = new MailAddress("SampleModerators2019k@gmail.com");
+            var order = context.Orders.Where(o => o.OrderId == orderId).SingleOrDefault();
+            var password = "AbcPassword1!";
+            var sub = "New Order number " +orderId ;
+            var body = "You have received a new order. Order Id number " +orderId +". The order was placed on " +order.OrderDate +"Please log in to view the order details.";
+            var smtp = new SmtpClient()
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(senderEmail.Address, password)
             };
-            client.Send("admin@example.com", "admin@example.com", "New order", "You have a new order!" +orderId);
-            Session["cart"] = null;
+            using (var mess = new MailMessage(senderEmail, receiverEmail)
+            {
+                Subject = sub,
+                Body = body
+            })
+            {
+                smtp.Send(mess);
+            }
         }
     }
 
